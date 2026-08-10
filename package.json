@@ -1,0 +1,8 @@
+{
+  "name": "vatera-webhook-vercel",
+  "version": "1.0.0",
+  "description": "Backend webhook Midtrans untuk Vatera Store (versi Vercel serverless)",
+  "dependencies": {
+    "midtrans-client": "^1.4.2"
+  }
+}
