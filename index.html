@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VATERA STORE — Donasi Server SAMP</title>
+<title>VATERA ROLPLAY  — Donasi Server SAMP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Teko:wght@600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -322,7 +322,7 @@
 
 <!-- TAMBAHAN: konfigurasi Firebase — supaya editan admin tersimpan permanen & live buat semua pengunjung -->
 <script type="application/json" id="firebase-config">
-{"apiKey":"","authDomain":"","projectId":"","storageBucket":"","messagingSenderId":"","appId":""}
+{"apiKey":"AIzaSyBMlI9U4LsnSdHqv1VVcui_fslfdADQQ5I","authDomain":"vaterarp.firebaseapp.com","projectId":"vaterarp","storageBucket":"vaterarp.firebasestorage.app","messagingSenderId":"727915583132","appId":"1:727915583132:web:4097bb52c345e8973e3f59"}
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
@@ -331,13 +331,13 @@
   <div class="status-bar">
     <div class="wrap">
       <span><span class="dot"></span>Server Online</span>
-      <span>IP: play.vaterastore.gg:7777</span>
+      <span>IP:208.84.103.75:7037</span>
     </div>
   </div>
   <div class="nav">
     <div class="brand">
       <div class="badge-logo" id="logoHeader"><span>VS</span></div>
-      <div class="brand-name">Vatera Store<small>Donasi Server SAMP</small></div>
+      <div class="brand-name">Vatera Roleplay<small>website resmi vatera roleplay</small></div>
     </div>
     <button class="menu-toggle" id="menuToggle" aria-label="Buka menu">☰</button>
     <nav class="links" id="navLinks">
@@ -356,7 +356,7 @@
     <div>
       <div class="eyebrow">Website Resmi · Vatera Store</div>
       <h1>Naikkan <em>Gaya</em><br>Main Kamu</h1>
-      <p>Donasi buat dapetin kendaraan eksklusif dan item spesial di server, sekaligus bantu Vatera terus jalan dan berkembang.</p>
+      <p>Donasi buat dapetin kendaraan eksklusif,rumah & bisnis properti di server, sekaligus bantu Vatera terus jalan dan berkembang.</p>
       <div class="hero-cta">
         <a href="#katalog" class="btn-primary">Lihat Katalog</a>
         <a href="#proses" class="btn-ghost">Cara Donasi</a>
@@ -430,7 +430,7 @@
       <div>
         <div class="brand" style="margin-bottom:14px;">
           <div class="badge-logo" id="logoFooter"><span>VS</span></div>
-          <div class="brand-name">Vatera Store</div>
+          <div class="brand-name">Vatera Roleplay</div>
         </div>
         <p style="max-width:280px;">Website resmi untuk server SAMP Vatera — kendaraan &amp; item spesial buat naikkan gaya main kamu.</p>
       </div>
@@ -449,7 +449,7 @@
     </div>
     <div class="rule" style="margin-bottom:24px;"></div>
     <div class="footer-bottom">
-      <span>© 2026 Vatera Store</span>
+      <span>© 2026 Vatera Roleplay</span>
       <span>Server SAMP Roleplay Indonesia</span>
     </div>
   </div>
@@ -468,7 +468,7 @@
       </div>
       <button class="btn-primary" style="width:100%;" id="adminLoginBtn">Masuk</button>
       <p id="adminLoginError" style="color:var(--orange);display:none;">Password salah.</p>
-      <p>Password default: <strong style="color:var(--gold);">vatera123</strong><br>Ganti di kode (cari <span class="mono">ADMIN_PASSWORD</span>) sebelum situs live.</p>
+      <p>Password default: <strong style="color:var(--gold);">************</strong><br> ( <span class="mono">PASSWORD</span>) TANYA YANG BUAT WEB.</p>
       <button class="linklike" style="color:var(--muted);margin-top:20px;" id="closeAdminBtnLogin">← Kembali ke toko</button>
     </div>
 
@@ -599,11 +599,11 @@
             <label>Ikon</label>
             <select id="fIcon">
               <option value="car">Mobil</option>
-              <option value="plane">Pesawat</option>
+              <option value="plane">kendaraan udara</option>
               <option value="house">Rumah</option>
-              <option value="badge">Lencana / VIP</option>
-              <option value="skin">Skin Karakter</option>
-              <option value="gem">Umum (Berlian)</option>
+              <option value="badge">VIP</option>
+              <option value="skin">bisnis</option>
+              <option value="gem">Lainya</option>
             </select>
           </div>
         </div>
@@ -1101,7 +1101,7 @@
       icon: document.getElementById('fIcon').value,
       nama, harga,
       deskripsi: document.getElementById('fDeskripsi').value.trim(),
-      badge: document.getElementById('fBadge').value.trim()
+    adge: document.getElementById('fBadge').value.trim()
     };
     if(pendingItemImageDataUrl !== 'UNCHANGED'){
       payload.gambar = pendingItemImageDataUrl; // null = tanpa gambar, string = gambar baru
