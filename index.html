@@ -301,7 +301,7 @@
   {"id":3,"kategori":"Kendaraan","nama":"Hydra (Pesawat)","deskripsi":"Jet pribadi, khusus buat player level tinggi di server.","harga":"Rp150rb","badge":"Limited","icon":"plane"},
   {"id":4,"kategori":"Item Spesial","nama":"Rumah Mewah Slot","deskripsi":"Slot rumah premium di area elite, sudah termasuk garasi.","harga":"Rp90rb","badge":"","icon":"house"},
   {"id":5,"kategori":"Item Spesial","nama":"VIP Badge Bintang","deskripsi":"Lencana eksklusif di atas nama, tampil beda di chat & nametag.","harga":"Rp25rb","badge":"","icon":"badge"},
-  {"id":6,"kategori":"Item Spesial","nama":"Skin Karakter Custom","deskripsi":"Ganti tampilan karakter dengan skin eksklusif donatur.","harga":"Rp30rb","badge":"","icon":"skin"}
+  {"id":6,"kategori":"Item Spesial","nama":"Skin Karakter Custom","deskripsi":"Ganti tampilan karakter dengan skin eksklusif donatur.","harga":"Rp30rb","badge":"","icon":"skin","gambar":null}
 ]
 </script>
 
@@ -314,6 +314,18 @@
 <script type="application/json" id="payment-config">
 {"mode":"sandbox","clientKey":"","backendUrl":""}
 </script>
+
+<!-- TAMBAHAN: konfigurasi nomor & template pesan checkout WhatsApp -->
+<script type="application/json" id="wa-config">
+{"number":"6288976108929","template":"Halo Vatera Store, saya mau order:\n\nItem: {nama}\nKategori: {kategori}\nHarga: {harga}\nCatatan: {badge}\n\nMohon info langkah selanjutnya ya. Terima kasih!"}
+</script>
+
+<!-- TAMBAHAN: konfigurasi Firebase — supaya editan admin tersimpan permanen & live buat semua pengunjung -->
+<script type="application/json" id="firebase-config">
+{"apiKey":"","authDomain":"","projectId":"","storageBucket":"","messagingSenderId":"","appId":""}
+</script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
 
 <header>
   <div class="status-bar">
@@ -333,7 +345,7 @@
       <a href="#proses">Cara Order</a>
       <a href="#kontak">Kontak</a>
       <button class="linklike" id="openAdminBtn">Admin</button>
-      <a href="https:/wa.me//6288976108929" class="btn-order" target="_blank" rel="noopener">Donasi Sekarang</a>
+      <a href="https://wa.me/6288976108929" class="btn-order" target="_blank" rel="noopener">Donasi Sekarang</a>
     </nav>
   </div>
   <div class="rule"></div>
@@ -424,7 +436,7 @@
       </div>
       <div>
         <h5>Kontak Admin</h5>
-        <a href="https:/wa.me//6288976108929" target="_blank" rel="noopener">WhatsApp: +6288976108929</a>
+        <a href="https://wa.me/6288976108929" target="_blank" rel="noopener">WhatsApp: +6288976108929</a>
         <a href="#">Discord: https://discord.gg/46KmmXvTQF/vaterastore</a>
         <p>IP Server: 208.84.103.75:7037</p>
       </div>
@@ -464,6 +476,48 @@
       <div class="admin-top">
         <h2>Panel Admin Katalog</h2>
         <button class="btn-ghost" id="closeAdminBtn">Kembali ke Toko</button>
+      </div>
+
+      <!-- TAMBAHAN: Koneksi Firebase (biar editan auto-tersimpan & live buat semua pengunjung) -->
+      <div class="admin-form">
+        <h3>Koneksi Database (Firebase)</h3>
+        <p id="fbStatus" style="font-family:'Space Mono',monospace;font-size:12px;color:var(--muted);margin-bottom:14px;">⚪ Belum terhubung — editan hanya tersimpan di browser ini sampai kamu download & upload manual.</p>
+        <div class="field-row">
+          <div class="field">
+            <label>apiKey</label>
+            <input type="text" id="fbApiKey" placeholder="AIzaSy...">
+          </div>
+          <div class="field">
+            <label>authDomain</label>
+            <input type="text" id="fbAuthDomain" placeholder="nama-project.firebaseapp.com">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>projectId</label>
+            <input type="text" id="fbProjectId" placeholder="nama-project">
+          </div>
+          <div class="field">
+            <label>storageBucket</label>
+            <input type="text" id="fbStorageBucket" placeholder="nama-project.appspot.com">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>messagingSenderId</label>
+            <input type="text" id="fbMessagingSenderId" placeholder="1234567890">
+          </div>
+          <div class="field">
+            <label>appId</label>
+            <input type="text" id="fbAppId" placeholder="1:1234567890:web:xxxxx">
+          </div>
+        </div>
+        <button class="btn-primary" id="saveFirebaseBtn">Simpan &amp; Hubungkan</button>
+        <p class="admin-note" style="margin-top:14px;">
+          // Ambil 6 nilai ini dari Firebase Console → Project Settings → General → scroll ke "Your apps" → Web app.<br>
+          // Setelah tersambung, klik "selesai edit/replace" SEKALI untuk menyimpan koneksi ini permanen ke file, lalu upload ke hosting seperti biasa.<br>
+          // Setelah itu, semua editan katalog/logo/payment/WA di panel ini otomatis tersimpan ke database dan langsung tampil ke semua pengunjung — TANPA perlu download/upload lagi.
+        </p>
       </div>
 
       <div class="admin-form">
@@ -512,6 +566,24 @@
         </p>
       </div>
 
+      <!-- TAMBAHAN: Setting checkout WhatsApp -->
+      <div class="admin-form">
+        <h3>Checkout via WhatsApp</h3>
+        <div class="field">
+          <label>Nomor WhatsApp Admin (format: 62xxxxxxxxxx, tanpa + atau 0 di depan)</label>
+          <input type="text" id="waNumber" placeholder="6288976108929">
+        </div>
+        <div class="field">
+          <label>Template Pesan Checkout</label>
+          <textarea id="waTemplate" style="min-height:120px;" placeholder="Halo Vatera Store, saya mau order..."></textarea>
+        </div>
+        <button class="btn-primary" id="saveWaBtn">Simpan Pengaturan WhatsApp</button>
+        <p class="admin-note" style="margin-top:14px;">
+          // Placeholder yang bisa dipakai di template: <span class="mono">{nama}</span>, <span class="mono">{kategori}</span>, <span class="mono">{harga}</span>, <span class="mono">{badge}</span>.<br>
+          // Placeholder otomatis diganti sesuai item yang diklik "Beli" oleh pengunjung, lalu langsung membuka chat WhatsApp ke nomor di atas.
+        </p>
+      </div>
+
       <div class="admin-form">
         <h3 id="formTitle">Tambah Item Baru</h3>
         <input type="hidden" id="editId">
@@ -540,6 +612,16 @@
           <input type="text" id="fNama" placeholder="Contoh: Bike NRG-500">
         </div>
         <div class="field">
+          <label>Gambar Item (opsional — ambil dari file lokal, dipakai kalau diisi; kalau kosong pakai ikon)</label>
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <div id="fGambarPreview" style="width:80px;height:80px;background:var(--panel2);border:1px solid rgba(242,185,58,0.3);display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0;color:var(--muted);font-family:'Space Mono',monospace;font-size:10px;text-align:center;">Tanpa gambar</div>
+            <div style="flex:1;min-width:200px;">
+              <input type="file" id="fGambarInput" accept="image/*">
+              <button type="button" class="btn-ghost" id="fGambarRemoveBtn" style="margin-top:10px;padding:8px 16px;font-size:12px;">Hapus Gambar</button>
+            </div>
+          </div>
+        </div>
+        <div class="field">
           <label>Deskripsi</label>
           <textarea id="fDeskripsi" placeholder="Deskripsi singkat item..."></textarea>
         </div>
@@ -563,13 +645,13 @@
       <div id="adminList"></div>
 
       <div class="download-box">
-        <p><strong>Selesai edit?</strong>kliik selesai/replace file ini di hosting kamu untuk update katalog yang tampil ke pengunjung.</p>
-        <button class="btn-download" id="downloadBtn">⬇ selesai edit/replace</button>
+        <p><strong>Download file (opsional/cadangan).</strong> Kalau Firebase sudah tersambung, katalog otomatis tersimpan & live — tombol ini cuma buat backup atau setup awal koneksi Firebase.</p>
+        <button class="btn-download" id="downloadBtn">⬇ download backup situs</button>
       </div>
 
       <div class="admin-note">
-        // Catatan: perubahan di panel ini hanya tersimpan di browser sesi ini sampai kamu tekan "Download Situs Terbaru".<br>
-        // File hasil download menggantikan file lama — upload ke hosting via cPanel/FTP seperti biasa, tidak perlu edit kode sama sekali.<br>
+        // Kalau Firebase SUDAH tersambung (lihat status di paling atas panel ini): semua editan katalog/logo/payment/WA otomatis tersimpan ke database dan langsung tampil ke semua pengunjung — tidak perlu download/upload lagi.<br>
+        // Kalau Firebase BELUM tersambung: editan hanya tersimpan di browser ini sampai kamu klik "download backup situs" lalu upload manual ke hosting via cPanel/FTP.<br>
         // Password admin di sini adalah proteksi dasar sisi-klien (siapapun yang lihat kode sumber bisa menemukannya) — cukup untuk mencegah pengunjung iseng, bukan pengaman tingkat tinggi.
       </div>
     </div>
@@ -591,8 +673,13 @@
 
   let catalogData = JSON.parse(document.getElementById('catalog-data').textContent);
   let siteConfig = JSON.parse(document.getElementById('site-config').textContent);
+  let waConfig = JSON.parse(document.getElementById('wa-config').textContent);
+  let firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
   let activeFilter = 'Semua';
   let pendingLogoDataUrl = null;
+  let pendingItemImageDataUrl = null; // null = tanpa gambar, 'UNCHANGED' = pakai gambar lama saat edit, string = gambar baru
+  let db = null;
+  let firebaseReady = false;
 
   function syncDataTag(){
     document.getElementById('catalog-data').textContent = JSON.stringify(catalogData, null, 2);
@@ -600,6 +687,149 @@
   function syncConfigTag(){
     document.getElementById('site-config').textContent = JSON.stringify(siteConfig, null, 2);
   }
+  function syncWaConfigTag(){
+    document.getElementById('wa-config').textContent = JSON.stringify(waConfig, null, 2);
+  }
+  function syncFirebaseConfigTag(){
+    document.getElementById('firebase-config').textContent = JSON.stringify(firebaseConfig, null, 2);
+  }
+  function renderWaConfigForm(){
+    const numEl = document.getElementById('waNumber');
+    if(!numEl) return;
+    numEl.value = waConfig.number || '';
+    document.getElementById('waTemplate').value = waConfig.template || '';
+  }
+
+  // ---------- kompresi gambar sebelum disimpan (biar hemat & muat di database) ----------
+  function readAndCompressImage(file, maxDim, quality){
+    return new Promise((resolve, reject)=>{
+      const reader = new FileReader();
+      reader.onload = ()=>{
+        const img = new Image();
+        img.onload = ()=>{
+          let {width, height} = img;
+          if(width > maxDim || height > maxDim){
+            if(width > height){ height = Math.round(height * maxDim / width); width = maxDim; }
+            else { width = Math.round(width * maxDim / height); height = maxDim; }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width; canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', quality));
+        };
+        img.onerror = reject;
+        img.src = reader.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // ---------- Firebase: koneksi & sinkronisasi data ----------
+  function initFirebase(){
+    if(!firebaseConfig.apiKey || !firebaseConfig.projectId){ firebaseReady = false; return; }
+    try{
+      if(!firebase.apps || !firebase.apps.length){
+        firebase.initializeApp(firebaseConfig);
+      }
+      db = firebase.firestore();
+      firebaseReady = true;
+    }catch(err){
+      console.error('Gagal init Firebase:', err);
+      firebaseReady = false;
+    }
+  }
+
+  async function loadFromFirebase(){
+    if(!firebaseReady) return;
+    try{
+      const col = db.collection('vatera');
+      const [catalogSnap, siteSnap, paySnap, waSnap] = await Promise.all([
+        col.doc('catalog').get(), col.doc('site').get(), col.doc('payment').get(), col.doc('wa').get()
+      ]);
+      if(catalogSnap.exists && catalogSnap.data().items){ catalogData = catalogSnap.data().items; }
+      else { await col.doc('catalog').set({items: catalogData}); }
+      if(siteSnap.exists){ siteConfig = siteSnap.data(); }
+      else { await col.doc('site').set(siteConfig); }
+      if(paySnap.exists){ paymentConfig = paySnap.data(); }
+      else { await col.doc('payment').set(paymentConfig); }
+      if(waSnap.exists){ waConfig = waSnap.data(); }
+      else { await col.doc('wa').set(waConfig); }
+      syncDataTag(); syncConfigTag(); syncPaymentConfigTag(); syncWaConfigTag();
+      renderFilters(); renderCatalog(); renderLogo();
+    }catch(err){
+      console.error('Gagal ambil data dari Firebase:', err);
+    }
+  }
+
+  function listenCatalogLive(){
+    if(!firebaseReady) return;
+    db.collection('vatera').doc('catalog').onSnapshot(snap=>{
+      if(snap.exists && snap.data().items){
+        catalogData = snap.data().items;
+        syncDataTag(); renderFilters(); renderCatalog();
+        const panel = document.getElementById('adminPanelView');
+        if(panel && panel.dataset.loggedin === '1') renderAdminList();
+      }
+    });
+  }
+
+  async function pushCatalog(){
+    if(!firebaseReady) return;
+    try{ await db.collection('vatera').doc('catalog').set({items: catalogData}); }
+    catch(err){ console.error(err); alert('Gagal menyimpan katalog ke database. Cek koneksi internet.'); }
+  }
+  async function pushSiteConfig(){
+    if(!firebaseReady) return;
+    try{ await db.collection('vatera').doc('site').set(siteConfig); }
+    catch(err){ console.error(err); alert('Gagal menyimpan logo ke database.'); }
+  }
+  async function pushPaymentConfig(){
+    if(!firebaseReady) return;
+    try{ await db.collection('vatera').doc('payment').set(paymentConfig); }
+    catch(err){ console.error(err); alert('Gagal menyimpan konfigurasi payment ke database.'); }
+  }
+  async function pushWaConfig(){
+    if(!firebaseReady) return;
+    try{ await db.collection('vatera').doc('wa').set(waConfig); }
+    catch(err){ console.error(err); alert('Gagal menyimpan konfigurasi WhatsApp ke database.'); }
+  }
+
+  function renderFirebaseConfigForm(){
+    const el = document.getElementById('fbApiKey');
+    if(!el) return;
+    document.getElementById('fbApiKey').value = firebaseConfig.apiKey || '';
+    document.getElementById('fbAuthDomain').value = firebaseConfig.authDomain || '';
+    document.getElementById('fbProjectId').value = firebaseConfig.projectId || '';
+    document.getElementById('fbStorageBucket').value = firebaseConfig.storageBucket || '';
+    document.getElementById('fbMessagingSenderId').value = firebaseConfig.messagingSenderId || '';
+    document.getElementById('fbAppId').value = firebaseConfig.appId || '';
+    document.getElementById('fbStatus').textContent = firebaseReady
+      ? '🟢 Terhubung ke Firebase — editan otomatis tersimpan & live buat semua pengunjung.'
+      : '⚪ Belum terhubung — editan hanya tersimpan di browser ini sampai kamu download & upload manual.';
+  }
+
+  document.getElementById('saveFirebaseBtn').addEventListener('click', async ()=>{
+    firebaseConfig = {
+      apiKey: document.getElementById('fbApiKey').value.trim(),
+      authDomain: document.getElementById('fbAuthDomain').value.trim(),
+      projectId: document.getElementById('fbProjectId').value.trim(),
+      storageBucket: document.getElementById('fbStorageBucket').value.trim(),
+      messagingSenderId: document.getElementById('fbMessagingSenderId').value.trim(),
+      appId: document.getElementById('fbAppId').value.trim()
+    };
+    syncFirebaseConfigTag();
+    initFirebase();
+    if(firebaseReady){
+      await loadFromFirebase();
+      listenCatalogLive();
+      renderAdminList(); renderPaymentConfigForm(); renderWaConfigForm();
+      alert('Berhasil terhubung ke Firebase!\n\nKlik "selesai edit/replace" SEKALI lagi untuk menyimpan koneksi ini permanen ke file, lalu upload ke hosting seperti biasa.\n\nSetelah itu, semua editan panel admin otomatis tersimpan ke database — tanpa perlu download/upload lagi.');
+    } else {
+      alert('Gagal terhubung. Cek lagi apiKey & projectId yang kamu masukkan.');
+    }
+    renderFirebaseConfigForm();
+  });
 
   function renderLogo(){
     const targets = ['logoHeader','logoFooter','logoPreview'];
@@ -614,27 +844,49 @@
     });
   }
 
-  document.getElementById('logoFileInput').addEventListener('change', (e)=>{
+  document.getElementById('logoFileInput').addEventListener('change', async (e)=>{
     const file = e.target.files[0];
     if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      pendingLogoDataUrl = reader.result;
-      document.getElementById('logoPreview').innerHTML = `<img src="${pendingLogoDataUrl}" alt="Preview" style="width:100%;height:100%;object-fit:cover;">`;
-    };
-    reader.readAsDataURL(file);
+    pendingLogoDataUrl = await readAndCompressImage(file, 300, 0.85);
+    document.getElementById('logoPreview').innerHTML = `<img src="${pendingLogoDataUrl}" alt="Preview" style="width:100%;height:100%;object-fit:cover;">`;
   });
-  document.getElementById('saveLogoBtn').addEventListener('click', ()=>{
+  document.getElementById('saveLogoBtn').addEventListener('click', async ()=>{
     if(!pendingLogoDataUrl){ alert('Pilih file gambar dulu.'); return; }
     siteConfig.logoDataUrl = pendingLogoDataUrl;
     syncConfigTag(); renderLogo();
-    alert('Logo tersimpan. Jangan lupa klik "Download Situs Terbaru" di bawah.');
+    await pushSiteConfig();
+    alert(firebaseReady ? 'Logo tersimpan & langsung tampil ke semua pengunjung.' : 'Logo tersimpan di browser ini. Jangan lupa klik "selesai edit/replace" di bawah, lalu upload ke hosting.');
   });
-  document.getElementById('removeLogoBtn').addEventListener('click', ()=>{
+  document.getElementById('removeLogoBtn').addEventListener('click', async ()=>{
     siteConfig.logoDataUrl = null;
     pendingLogoDataUrl = null;
     document.getElementById('logoFileInput').value = '';
     syncConfigTag(); renderLogo();
+    await pushSiteConfig();
+  });
+
+  // ---------- setting checkout WhatsApp ----------
+  document.getElementById('saveWaBtn').addEventListener('click', async ()=>{
+    const num = document.getElementById('waNumber').value.trim().replace(/[^0-9]/g,'');
+    if(!num){ alert('Nomor WhatsApp wajib diisi.'); return; }
+    waConfig.number = num;
+    waConfig.template = document.getElementById('waTemplate').value;
+    syncWaConfigTag();
+    await pushWaConfig();
+    alert(firebaseReady ? 'Pengaturan WhatsApp tersimpan & langsung aktif buat semua pengunjung.' : 'Pengaturan WhatsApp tersimpan di browser ini. Jangan lupa klik "selesai edit/replace" di bawah, lalu upload ke hosting.');
+  });
+
+  // ---------- upload gambar item ----------
+  document.getElementById('fGambarInput').addEventListener('change', async (e)=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    pendingItemImageDataUrl = await readAndCompressImage(file, 700, 0.75);
+    document.getElementById('fGambarPreview').innerHTML = `<img src="${pendingItemImageDataUrl}" alt="Preview" style="width:100%;height:100%;object-fit:cover;">`;
+  });
+  document.getElementById('fGambarRemoveBtn').addEventListener('click', ()=>{
+    pendingItemImageDataUrl = null;
+    document.getElementById('fGambarInput').value = '';
+    document.getElementById('fGambarPreview').innerHTML = 'Tanpa gambar';
   });
 
   // ===================== TAMBAHAN: Payment Gateway (Midtrans) — Pembayaran + Webhook =====================
@@ -656,13 +908,14 @@
     document.getElementById('pgBackendUrl').value = paymentConfig.backendUrl || '';
   }
 
-  document.getElementById('savePaymentBtn').addEventListener('click', ()=>{
+  document.getElementById('savePaymentBtn').addEventListener('click', async ()=>{
     paymentConfig.mode = document.getElementById('pgMode').value;
     paymentConfig.clientKey = document.getElementById('pgClientKey').value.trim();
     paymentConfig.backendUrl = document.getElementById('pgBackendUrl').value.trim().replace(/\/$/,'');
     syncPaymentConfigTag();
     loadSnapScript();
-    alert('Konfigurasi payment tersimpan. Jangan lupa klik "Download Situs Terbaru" di bawah.');
+    await pushPaymentConfig();
+    alert(firebaseReady ? 'Konfigurasi payment tersimpan & langsung aktif buat semua pengunjung.' : 'Konfigurasi payment tersimpan di browser ini. Jangan lupa klik "selesai edit/replace" di bawah, lalu upload ke hosting.');
   });
 
   function loadSnapScript(){
@@ -676,6 +929,22 @@
       : 'https://app.sandbox.midtrans.com/snap/snap.js';
     s.setAttribute('data-client-key', paymentConfig.clientKey);
     document.head.appendChild(s);
+  }
+
+  // ---------- checkout langsung ke WhatsApp ----------
+  function checkoutWA(itemId){
+    const item = catalogData.find(i=>i.id===itemId);
+    if(!item) return;
+    const num = (waConfig.number || '').replace(/[^0-9]/g,'');
+    if(!num){ alert('Nomor WhatsApp admin belum diatur. Atur dulu lewat Panel Admin.'); return; }
+    const template = waConfig.template || 'Halo, saya mau order {nama} ({kategori}) seharga {harga}.';
+    const pesan = template
+      .replaceAll('{nama}', item.nama)
+      .replaceAll('{kategori}', item.kategori)
+      .replaceAll('{harga}', item.harga)
+      .replaceAll('{badge}', item.badge || '-');
+    const url = `https://wa.me/${num}?text=${encodeURIComponent(pesan)}`;
+    window.open(url, '_blank', 'noopener');
   }
 
   async function bayarOtomatis(itemId){
@@ -734,7 +1003,9 @@
       <div class="product-card">
         <div class="product-visual">
           ${item.badge ? `<span class="stock-pill">${item.badge}</span>` : ''}
-          <svg viewBox="0 0 100 100" fill="none">${ICONS[item.icon] || ICONS.gem}</svg>
+          ${item.gambar
+            ? `<img src="${item.gambar}" alt="${item.nama}" style="width:100%;height:100%;object-fit:cover;position:relative;z-index:2;">`
+            : `<svg viewBox="0 0 100 100" fill="none">${ICONS[item.icon] || ICONS.gem}</svg>`}
         </div>
         <div class="product-info">
           <div class="cat">${item.kategori}</div>
@@ -743,7 +1014,7 @@
           <div class="price-row">
             <div class="price">${item.harga}</div>
             <div style="display:flex;gap:8px;">
-              <a href="https:/wa.me//6288976108929" class="btn-beli">Beli</a>
+              <button type="button" class="btn-beli" onclick="checkoutWA(${item.id})">Beli</button>
               <button type="button" class="btn-beli" style="background:var(--gold);color:var(--night);" onclick="bayarOtomatis(${item.id})">Bayar Otomatis</button>
             </div>
           </div>
@@ -761,6 +1032,9 @@
     }
     list.innerHTML = catalogData.map(item => `
       <div class="admin-list-item">
+        <div style="width:44px;height:44px;flex-shrink:0;background:var(--panel2);overflow:hidden;display:flex;align-items:center;justify-content:center;">
+          ${item.gambar ? `<img src="${item.gambar}" style="width:100%;height:100%;object-fit:cover;">` : `<svg viewBox="0 0 100 100" fill="none" style="width:70%;height:70%;">${ICONS[item.icon] || ICONS.gem}</svg>`}
+        </div>
         <div class="info">
           <div class="nm">${item.nama}</div>
           <div class="meta">${item.kategori} · ${item.harga} ${item.badge ? '· '+item.badge : ''}</div>
@@ -785,6 +1059,9 @@
     document.getElementById('fBadge').value = '';
     document.getElementById('formTitle').textContent = 'Tambah Item Baru';
     document.getElementById('cancelEditBtn').style.display = 'none';
+    pendingItemImageDataUrl = null;
+    document.getElementById('fGambarInput').value = '';
+    document.getElementById('fGambarPreview').innerHTML = 'Tanpa gambar';
   }
 
   function startEdit(id){
@@ -799,6 +1076,11 @@
     document.getElementById('fBadge').value = item.badge || '';
     document.getElementById('formTitle').textContent = 'Edit Item';
     document.getElementById('cancelEditBtn').style.display = 'inline-block';
+    pendingItemImageDataUrl = 'UNCHANGED';
+    document.getElementById('fGambarInput').value = '';
+    document.getElementById('fGambarPreview').innerHTML = item.gambar
+      ? `<img src="${item.gambar}" alt="Preview" style="width:100%;height:100%;object-fit:cover;">`
+      : 'Tanpa gambar';
     document.getElementById('adminPanelView').scrollIntoView({behavior:'smooth'});
   }
 
@@ -806,9 +1088,10 @@
     if(!confirm('Hapus item ini?')) return;
     catalogData = catalogData.filter(i=>i.id!==id);
     syncDataTag(); renderAdminList(); renderFilters(); renderCatalog();
+    pushCatalog();
   }
 
-  document.getElementById('saveItemBtn').addEventListener('click', ()=>{
+  document.getElementById('saveItemBtn').addEventListener('click', async ()=>{
     const nama = document.getElementById('fNama').value.trim();
     const harga = document.getElementById('fHarga').value.trim();
     if(!nama || !harga){ alert('Nama dan harga wajib diisi.'); return; }
@@ -820,6 +1103,9 @@
       deskripsi: document.getElementById('fDeskripsi').value.trim(),
       badge: document.getElementById('fBadge').value.trim()
     };
+    if(pendingItemImageDataUrl !== 'UNCHANGED'){
+      payload.gambar = pendingItemImageDataUrl; // null = tanpa gambar, string = gambar baru
+    }
     if(editId){
       const idx = catalogData.findIndex(i=>i.id===Number(editId));
       if(idx>-1) catalogData[idx] = {...catalogData[idx], ...payload};
@@ -828,6 +1114,8 @@
       catalogData.push({id:newId, ...payload});
     }
     syncDataTag(); renderAdminList(); renderFilters(); renderCatalog(); resetForm();
+    await pushCatalog();
+    if(firebaseReady){ /* live tersimpan, tanpa alert supaya gak ganggu alur cepat tambah banyak item */ }
   });
   document.getElementById('cancelEditBtn').addEventListener('click', resetForm);
 
@@ -839,6 +1127,8 @@
       document.getElementById('adminLoginView').style.display='none';
       document.getElementById('adminPanelView').style.display='block';
       renderPaymentConfigForm();
+      renderWaConfigForm();
+      renderFirebaseConfigForm();
     } else {
       document.getElementById('adminLoginView').style.display='block';
       document.getElementById('adminPanelView').style.display='none';
@@ -862,6 +1152,8 @@
       document.getElementById('adminLoginError').style.display='none';
       renderAdminList();
       renderPaymentConfigForm();
+      renderWaConfigForm();
+      renderFirebaseConfigForm();
     } else {
       document.getElementById('adminLoginError').style.display='block';
     }
@@ -872,6 +1164,8 @@
     syncDataTag();
     syncConfigTag();
     syncPaymentConfigTag();
+    syncWaConfigTag();
+    syncFirebaseConfigTag();
     const overlay = document.getElementById('adminOverlay');
     const wasOpen = overlay.classList.contains('open');
     overlay.classList.remove('open');
@@ -896,6 +1190,11 @@
   renderCatalog();
   renderLogo();
   loadSnapScript();
+  initFirebase();
+  if(firebaseReady){
+    loadFromFirebase();
+    listenCatalogLive();
+  }
 </script>
 
 </body>
