@@ -2,743 +2,906 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <title>VATERA ROLEPLAY — Donation Store</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@500;600;700;800&display=swap');
+
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Rajdhani',sans-serif;color:#fff;background:#080808;overflow-x:hidden}
-body::before{content:"";position:fixed;inset:0;z-index:-5;background:linear-gradient(rgba(5,5,5,.72),rgba(12,6,0,.91)),url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2200&q=90");background-size:cover;background-position:center;background-attachment:fixed}
-body::after{content:"";position:fixed;inset:0;z-index:-4;pointer-events:none;background:radial-gradient(circle at 50% 20%,rgba(255,130,0,.16),transparent 35%)}
-::-webkit-scrollbar{width:7px}::-webkit-scrollbar-track{background:#050505}::-webkit-scrollbar-thumb{background:linear-gradient(#ff7000,#ffd04a);border-radius:10px}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+  font-family:'Rajdhani',sans-serif;color:#fff;background:#060606;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-5;
+  background:linear-gradient(rgba(4,4,3,.66),rgba(10,5,0,.94)),
+  url("https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=2200&q=90")
+  center/cover fixed;
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:-4;pointer-events:none;
+  background:radial-gradient(circle at 50% 10%,rgba(255,135,0,.18),transparent 40%);
+}
 
-nav{position:fixed;top:0;left:0;width:100%;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:17px 6%;background:rgba(4,4,4,.82);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,145,0,.22)}
-.logo-wrap{display:flex;align-items:center;gap:10px;min-width:0}
-.logo-img{width:38px;height:38px;object-fit:cover;border-radius:8px;border:1px solid rgba(255,145,0,.35);display:none}
-.logo{font-family:'Orbitron',sans-serif;font-size:21px;font-weight:800;letter-spacing:2px;color:#ff7b00;text-shadow:0 0 15px rgba(255,120,0,.5);white-space:nowrap}.logo span{color:#ffd14a}
-.nav-links{list-style:none;display:flex;gap:28px;margin-left:auto;margin-right:25px}.nav-links a{color:#ddd;text-decoration:none;font-weight:600}.nav-links a:hover{color:#ff9800}
-.nav-right{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0}
-.discord-btn,.admin-open{border:0;cursor:pointer;text-decoration:none;min-height:40px;padding:9px 14px;border-radius:8px;font-family:'Rajdhani',sans-serif;font-weight:800;white-space:nowrap}
-.discord-btn{color:#111;background:linear-gradient(135deg,#ff7100,#ffd34d)}.admin-open{color:#ffd45c;background:rgba(255,145,0,.08);border:1px solid rgba(255,145,0,.3)}
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px 20px 70px}.hero-content{max-width:950px}
-.badge{display:inline-block;padding:8px 18px;margin-bottom:25px;border-radius:50px;border:1px solid rgba(255,165,0,.5);background:rgba(255,125,0,.08);color:#ffc64d;font-weight:700;letter-spacing:2px}
-.hero h1{font-family:'Orbitron',sans-serif;font-size:clamp(43px,8vw,90px);line-height:1;margin-bottom:20px;text-shadow:0 0 15px rgba(255,125,0,.3)}.hero h1 span{color:#ff8100}
-.hero p{max-width:700px;margin:0 auto 32px;color:#ccc;font-size:18px;line-height:1.6}.hero-buttons{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
-.btn{display:inline-flex;justify-content:center;align-items:center;min-width:180px;padding:14px 25px;border-radius:8px;text-decoration:none;font-weight:800;transition:.3s}.btn-primary{color:#111;background:linear-gradient(135deg,#ff7000,#ffd34d);box-shadow:0 0 22px rgba(255,120,0,.25)}.btn-secondary{color:#fff;background:rgba(255,255,255,.04);border:1px solid rgba(255,145,0,.4)}.btn:hover{transform:translateY(-3px)}
-.status{max-width:1100px;margin:-40px auto 80px;padding:20px;display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.status-card{padding:22px;text-align:center;background:rgba(8,8,8,.72);backdrop-filter:blur(12px);border:1px solid rgba(255,145,0,.18);border-radius:14px}.status-card h3{color:#999;font-size:13px;text-transform:uppercase;margin-bottom:7px}.status-card strong{font-family:'Orbitron',sans-serif;color:#ffd04b;font-size:22px}.online{color:#55ff91!important}
-section{padding:90px 6%}.section-title{text-align:center;margin-bottom:50px}.section-title .mini{color:#ff8500;letter-spacing:3px;font-weight:700;font-size:13px}.section-title h2{margin-top:10px;font-family:'Orbitron',sans-serif;font-size:clamp(27px,5vw,43px)}.section-title p{max-width:650px;margin:14px auto 0;color:#999}
-.products{max-width:1200px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.product{position:relative;overflow:hidden;padding:27px;border-radius:16px;background:linear-gradient(145deg,rgba(35,20,5,.88),rgba(9,9,9,.95));border:1px solid rgba(255,145,0,.2);transition:.3s}.product:hover{transform:translateY(-7px);border-color:rgba(255,155,0,.6);box-shadow:0 15px 45px rgba(0,0,0,.5)}
-.product-image{width:100%;height:175px;object-fit:cover;border-radius:11px;margin-bottom:20px;border:1px solid rgba(255,145,0,.18)}.product-icon{width:55px;height:55px;display:flex;justify-content:center;align-items:center;margin-bottom:18px;border-radius:12px;background:rgba(255,120,0,.08);border:1px solid rgba(255,145,0,.2);font-size:25px}.product h3{font-family:'Orbitron',sans-serif;font-size:19px;margin-bottom:8px}.product p{color:#999;line-height:1.5;min-height:48px}.price{margin:19px 0;font-family:'Orbitron',sans-serif;font-size:24px;color:#ffd04c}.buy{display:block;width:100%;padding:13px;border-radius:8px;text-align:center;text-decoration:none;color:#111;font-weight:900;background:linear-gradient(135deg,#ff7100,#ffd34d)}.popular{position:absolute;top:16px;right:16px;padding:6px 10px;border-radius:5px;color:#111;background:#ff7900;font-size:10px;font-weight:900}
-.benefits{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:18px;justify-items:center}.benefit{width:100%;text-align:center;padding:25px 17px;background:rgba(8,8,8,.68);border:1px solid rgba(255,145,0,.16);border-radius:13px}.benefit:nth-child(3){grid-column:1/-1;max-width:calc(50% - 9px)}.benefit .icon{font-size:30px;margin-bottom:10px}.benefit h3{margin-bottom:7px}.benefit p{color:#999;font-size:14px;line-height:1.5}
-.steps{max-width:900px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.step{padding:28px;background:rgba(8,8,8,.7);border:1px solid rgba(255,145,0,.16);border-radius:14px}.step-number{color:#ff8500;font-family:'Orbitron',sans-serif;font-size:34px;margin-bottom:12px}.step h3{margin-bottom:8px}.step p{color:#999;line-height:1.5}
-.cta{max-width:1100px;margin:30px auto 90px;padding:55px 25px;text-align:center;border-radius:20px;background:linear-gradient(135deg,rgba(255,110,0,.12),rgba(255,200,50,.04));border:1px solid rgba(255,145,0,.3)}.cta h2{font-family:'Orbitron',sans-serif;font-size:clamp(25px,5vw,40px);margin-bottom:10px}.cta p{color:#999;margin-bottom:25px}
-footer{padding:35px 20px;text-align:center;background:rgba(3,3,3,.92);border-top:1px solid rgba(255,145,0,.15)}.footer-logo{color:#ff8500;font-family:'Orbitron',sans-serif;font-size:18px;font-weight:800;margin-bottom:8px}footer p{color:#777;font-size:13px}
+/* TOP BAR */
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:70px;z-index:2000;
+  display:flex;align-items:center;gap:12px;padding:10px 16px;
+  background:rgba(3,3,3,.88);backdrop-filter:blur(15px);
+  border-bottom:1px solid rgba(255,145,0,.22);
+}
+.logo{
+  font-family:'Orbitron',sans-serif;font-weight:800;letter-spacing:1.5px;
+  font-size:clamp(14px,4vw,21px);color:#ff7900;white-space:nowrap;
+}
+.logo span{color:#ffd34d}
+.top-spacer{flex:1}
+.top-btn{
+  height:42px;min-width:44px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(255,154,0,.35);color:#ffd15a;background:rgba(255,145,0,.08);
+  font-family:'Rajdhani';font-weight:900;font-size:13px;
+}
+.top-btn.discord{padding:0 13px;color:#111;background:linear-gradient(135deg,#ff7100,#ffd34d);border:0}
 
-.admin-overlay{position:fixed;inset:0;z-index:5000;display:none;padding:25px;background:rgba(0,0,0,.84);backdrop-filter:blur(15px);overflow-y:auto}.admin-overlay.active{display:block}.admin-box{max-width:1150px;margin:30px auto;border-radius:18px;background:#0c0c0c;border:1px solid rgba(255,145,0,.35);box-shadow:0 25px 80px rgba(0,0,0,.8)}
-.admin-header{display:flex;justify-content:space-between;align-items:center;padding:22px 25px;border-bottom:1px solid rgba(255,145,0,.15)}.admin-header h2{font-family:'Orbitron',sans-serif;color:#ff8b00}.close-admin{width:38px;height:38px;border:1px solid rgba(255,145,0,.3);border-radius:8px;background:#151515;color:#fff;cursor:pointer;font-size:20px}.admin-content{padding:25px}
-.login-box{max-width:430px;margin:70px auto;text-align:center}.login-box h2{font-family:'Orbitron',sans-serif;color:#ff8b00;margin-bottom:10px}.login-box p{color:#888;margin-bottom:25px}
-.input{width:100%;padding:13px 15px;margin-bottom:13px;border-radius:8px;border:1px solid #292929;background:#121212;color:#fff;outline:none;font-family:'Rajdhani',sans-serif}.input:focus{border-color:#ff8700}.admin-btn{width:100%;padding:13px;border:0;border-radius:8px;cursor:pointer;font-family:'Rajdhani',sans-serif;font-weight:900;background:linear-gradient(135deg,#ff7100,#ffd34d);color:#111}.error{display:none;margin-top:12px;color:#ff6868}
-.dashboard{display:none}.dashboard.active{display:block}.dashboard-top{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}.dashboard-top h3{font-family:'Orbitron',sans-serif}.small-btn{border:1px solid rgba(255,145,0,.3);padding:9px 13px;border-radius:7px;background:#151515;color:#ffc64c;cursor:pointer}
-.settings{display:grid;grid-template-columns:repeat(2,1fr);gap:15px;margin-bottom:30px}.setting-card{padding:18px;background:#101010;border:1px solid rgba(255,145,0,.14);border-radius:12px}.setting-card h4{margin-bottom:12px;color:#ffb52d}
-.product-admin{padding:20px;margin-bottom:15px;display:grid;grid-template-columns:90px 1fr auto;gap:18px;align-items:center;background:#101010;border:1px solid rgba(255,145,0,.14);border-radius:12px}.product-admin img{width:90px;height:70px;object-fit:cover;border-radius:8px}.product-admin-info h4{margin-bottom:5px}.product-admin-info p{color:#888;font-size:14px}.product-admin-price{color:#ffc84c;font-weight:800}.admin-actions{display:flex;gap:7px;flex-wrap:wrap}.edit-btn,.delete-btn{padding:8px 11px;border-radius:7px;cursor:pointer;font-weight:800}.edit-btn{color:#111;background:#ffc84c;border:0}.delete-btn{color:#fff;background:#3b1414;border:1px solid #7b2929}
-.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.form-group{margin-bottom:12px}.form-group label{display:block;color:#999;margin-bottom:6px;font-size:14px}.full{grid-column:1/-1}.save-product{margin-top:8px;padding:12px 20px;border:0;border-radius:8px;cursor:pointer;background:linear-gradient(135deg,#ff7100,#ffd34d);color:#111;font-weight:900}
-.firebase-status{margin:0 0 18px;padding:10px 13px;border-radius:8px;background:#111;border:1px solid #222;color:#aaa;font-size:13px}.firebase-status.ok{border-color:#315c3d;color:#7cff9b}.firebase-status.bad{border-color:#6d3030;color:#ff8c8c}
-.gallery-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.file-label{display:inline-flex;align-items:center;justify-content:center;padding:11px 16px;border-radius:8px;cursor:pointer;background:#171717;border:1px solid rgba(255,145,0,.3);color:#ffc64c;font-weight:800}.file-label input{display:none}.preview-box{display:none;width:90px;height:60px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,145,0,.3)}.preview-box img{width:100%;height:100%;object-fit:cover}.upload-note{color:#777;font-size:12px;margin-top:6px}.logo-preview{width:80px;height:80px;object-fit:cover;border-radius:10px;border:1px solid rgba(255,145,0,.3);display:none;margin-top:8px}
+/* 3 DOT MENU */
+.menu{
+  position:fixed;right:12px;top:78px;z-index:2100;width:min(310px,calc(100% - 24px));
+  padding:12px;border:1px solid rgba(255,154,0,.3);border-radius:15px;
+  background:rgba(10,10,10,.97);box-shadow:0 20px 70px rgba(0,0,0,.75);
+  opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;transition:.2s;
+}
+.menu.open{opacity:1;transform:none;pointer-events:auto}
+.menu-title{padding:10px 12px 8px;color:#888;font-size:13px;text-transform:uppercase;letter-spacing:2px}
+.menu-item{
+  width:100%;padding:13px 14px;margin:4px 0;border-radius:10px;border:1px solid transparent;
+  background:#121212;color:#fff;text-align:left;cursor:pointer;font-family:'Rajdhani';
+  font-size:16px;font-weight:800;
+}
+.menu-item:hover,.menu-item.active{border-color:rgba(255,145,0,.35);background:rgba(255,125,0,.1);color:#ffc84c}
 
-@media(max-width:1000px){.nav-links{gap:15px;margin-right:15px}.nav-links a{font-size:14px}.products{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}.status{grid-template-columns:1fr;max-width:500px}.steps{grid-template-columns:1fr;max-width:500px}.settings{grid-template-columns:1fr}.product-admin{grid-template-columns:70px 1fr}.admin-actions{grid-column:1/-1}}
-@media(max-width:700px){nav{padding:11px 12px;min-height:64px;gap:8px}.logo{font-size:15px;letter-spacing:1.2px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}.nav-links{display:none}.nav-right{gap:6px}.admin-open,.discord-btn{display:flex!important;align-items:center;justify-content:center;min-height:38px;padding:8px 10px;border-radius:8px;font-size:12px;line-height:1;flex-shrink:0}.admin-open{color:#ffd15a;background:rgba(255,145,0,.10);border:1px solid rgba(255,145,0,.38)}.discord-btn{min-width:65px}.hero{padding-top:105px}.hero h1{font-size:42px}.hero p{font-size:16px}section{padding:65px 18px}.products{grid-template-columns:1fr}.benefits{grid-template-columns:1fr 1fr}.benefit:nth-child(3){grid-column:1/-1;max-width:100%}.admin-overlay{padding:10px}.admin-box{margin:10px auto}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
-@media(max-width:400px){nav{padding:10px 9px;gap:5px}.logo{font-size:13px;letter-spacing:.8px}.nav-right{gap:4px}.admin-open,.discord-btn{min-height:36px;padding:7px 8px;font-size:10px}.admin-open{min-width:58px}.discord-btn{min-width:54px}.hero h1{font-size:36px}.hero p{font-size:15px}.benefits{gap:10px}.benefit{padding:18px 9px}}
-@media(max-width:340px){.logo{font-size:11px}.admin-open{font-size:9px;min-width:52px;padding:7px 6px}.discord-btn{font-size:9px;min-width:48px;padding:7px 5px}}
+/* SLIDE APP */
+.app{
+  position:fixed;inset:70px 0 0;overflow:hidden;
+}
+.slides{
+  height:100%;display:flex;transition:transform .55s cubic-bezier(.77,0,.18,1);
+}
+.slide{
+  min-width:100%;height:100%;overflow-y:auto;padding:55px 18px 90px;
+  scrollbar-width:thin;scrollbar-color:#ff8700 #111;
+}
+.slide-inner{max-width:1150px;margin:auto}
+.hero-slide{display:grid;place-items:center;text-align:center}
+.hero-content{max-width:900px;margin:auto}
+.badge{
+  display:inline-block;padding:8px 17px;border:1px solid rgba(255,172,75,.5);
+  border-radius:30px;background:rgba(255,120,0,.08);margin-bottom:24px;
+  color:#ffc84c;letter-spacing:3px;font-weight:800;
+}
+.hero h1{font-family:'Orbitron';font-size:clamp(44px,10vw,90px);line-height:.98}
+.hero h1 span{color:#ff7900}
+.hero p{max-width:720px;margin:22px auto 28px;color:#bbb;font-size:18px;line-height:1.6}
+.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;padding:14px 23px;
+  border-radius:9px;text-decoration:none;font-weight:900;cursor:pointer;border:0;font-family:'Rajdhani';
+}
+.primary{background:linear-gradient(135deg,#ff7100,#ffd34d);color:#111}
+.secondary{border:1px solid rgba(255,154,0,.4);background:rgba(255,255,255,.03);color:#fff}
+
+.section-title{text-align:center;margin-bottom:30px}
+.mini{color:#ffc84c;letter-spacing:3px;font-weight:800;font-size:13px}
+.section-title h2{font-family:'Orbitron';font-size:clamp(27px,6vw,43px);margin-top:8px}
+.section-title p{color:#888;max-width:680px;margin:12px auto}
+
+.status{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:1000px;margin:30px auto}
+.card{
+  padding:20px;text-align:center;background:rgba(9,9,9,.76);
+  border:1px solid rgba(255,154,0,.18);border-radius:14px;backdrop-filter:blur(12px)
+}
+.card small{display:block;color:#777;text-transform:uppercase}
+.card strong{display:block;font-family:'Orbitron';font-size:20px;color:#ffd04c;margin-top:7px}
+.online{color:#61ff9a!important}
+
+
+/* KATEGORI DONASI */
+.donation-categories{
+  width:100%;
+  max-width:1050px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+}
+.donation-category{
+  appearance:none;
+  -webkit-appearance:none;
+  width:100%;
+  min-height:155px;
+  padding:20px 14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  border:1px solid rgba(255,154,0,.25);
+  border-radius:16px;
+  background:linear-gradient(145deg,rgba(35,20,4,.92),rgba(9,9,9,.97));
+  color:#fff;
+  cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  box-shadow:0 12px 35px rgba(0,0,0,.3);
+  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;
+}
+.donation-category:hover,
+.donation-category:active{
+  transform:translateY(-4px);
+  border-color:rgba(255,154,0,.72);
+  background:linear-gradient(145deg,rgba(55,28,3,.95),rgba(10,10,10,.98));
+  box-shadow:0 18px 45px rgba(0,0,0,.5),0 0 22px rgba(255,121,0,.08);
+}
+.donation-category span{
+  display:block;
+  font-size:40px;
+  line-height:1;
+  margin-bottom:12px;
+}
+.donation-category b{
+  display:block;
+  font-family:'Orbitron',sans-serif;
+  font-size:14px;
+  letter-spacing:.5px;
+  color:#ffd04c;
+}
+.donation-category small{
+  display:block;
+  margin-top:7px;
+  color:#999;
+  font-size:13px;
+  line-height:1.2;
+}
+.category-products{
+  width:100%;
+  max-width:1150px;
+  margin:0 auto;
+}
+.back-category{
+  appearance:none;
+  border:1px solid rgba(255,154,0,.35);
+  background:rgba(255,121,0,.08);
+  color:#ffd04c;
+  padding:10px 14px;
+  border-radius:9px;
+  cursor:pointer;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:900;
+  margin-bottom:18px;
+}
+.selected-category{
+  text-align:center;
+  font-family:'Orbitron',sans-serif;
+  font-size:22px;
+  color:#fff;
+  margin-bottom:18px;
+}
+.selected-category span{color:#ff7900}
+
+@media(max-width:900px){
+  .donation-categories{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .donation-categories{grid-template-columns:repeat(2,1fr);gap:10px}
+  .donation-category{min-height:135px;padding:15px 8px;border-radius:13px}
+  .donation-category span{font-size:34px;margin-bottom:9px}
+  .donation-category b{font-size:11px}
+  .donation-category small{font-size:11px}
+}
+
+/* CATALOG */
+.products{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.product{
+  position:relative;padding:20px;background:linear-gradient(145deg,rgba(35,20,4,.9),rgba(9,9,9,.97));
+  border:1px solid rgba(255,154,0,.2);border-radius:15px;transition:.25s;
+}
+.product:hover{transform:translateY(-4px);border-color:rgba(255,154,0,.6)}
+.product-img{width:100%;height:145px;object-fit:cover;border-radius:10px;margin-bottom:14px;border:1px solid rgba(255,154,0,.18)}
+.product-icon{
+  width:50px;height:50px;display:grid;place-items:center;border-radius:11px;
+  background:rgba(255,121,0,.08);border:1px solid rgba(255,154,0,.2);font-size:24px;margin-bottom:12px
+}
+.product h3{font-family:'Orbitron';font-size:17px}
+.product p{color:#888;line-height:1.45;margin-top:7px;min-height:43px}
+.price{font-family:'Orbitron';color:#ffd04c;font-size:21px;margin:16px 0}
+.buy{width:100%;padding:11px;border-radius:8px;border:0;cursor:pointer;background:linear-gradient(135deg,#ff7100,#ffd34d);color:#111;font-weight:900}
+.tag{position:absolute;right:14px;top:14px;padding:5px 8px;border-radius:5px;background:#ff7900;color:#111;font-size:10px;font-weight:900}
+
+/* GENERAL CARDS */
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:1000px;margin:auto}
+.benefit,.community-card,.step{
+  padding:25px;text-align:center;background:rgba(9,9,9,.76);
+  border:1px solid rgba(255,154,0,.18);border-radius:14px;
+}
+.big{font-size:32px}.benefit h3{margin:8px 0}.benefit p,.step p{color:#888;line-height:1.5}
+.step{text-align:left}.step b{font-family:'Orbitron';font-size:32px;color:#ff8500;display:block;margin-bottom:10px}
+
+.support-row,.rank{
+  display:flex;align-items:center;justify-content:space-between;padding:13px 0;
+  border-bottom:1px solid rgba(255,255,255,.06)
+}
+.support-row:last-child,.rank:last-child{border:0}
+.name span{display:block;color:#777;font-size:13px}
+.amount{color:#ffd04c;font-weight:900}
+.rankleft{display:flex;align-items:center;gap:10px}
+.num{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;background:rgba(255,121,0,.08);border:1px solid rgba(255,154,0,.3);color:#ffd04c}
+
+/* ADMIN */
+.admin-box{
+  max-width:1100px;margin:auto;background:#0b0b0b;border:1px solid rgba(255,154,0,.3);
+  border-radius:16px;padding:22px;box-shadow:0 20px 70px rgba(0,0,0,.5)
+}
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.admin-card{background:#111;padding:18px;border-radius:12px;border:1px solid rgba(255,154,0,.15)}
+.admin-card h3{color:#ffc84c;margin-bottom:13px}
+.input{
+  width:100%;padding:12px 13px;margin-bottom:10px;border-radius:8px;border:1px solid #292929;
+  background:#080808;color:#fff;outline:0;font-family:'Rajdhani';font-size:15px
+}
+.input:focus{border-color:#ff8700}
+.admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+.smallbtn{padding:10px 13px;border:0;border-radius:8px;background:#1b1b1b;color:#ffc84c;border:1px solid rgba(255,154,0,.25);cursor:pointer;font-weight:800}
+.admin-product{
+  display:grid;grid-template-columns:70px 1fr auto;gap:12px;align-items:center;
+  padding:12px;border-bottom:1px solid rgba(255,255,255,.06)
+}
+.admin-thumb{width:70px;height:55px;object-fit:cover;border-radius:7px;background:#171717;display:grid;place-items:center;font-size:24px}
+.file-note{color:#777;font-size:12px;margin:-3px 0 10px}
+.empty{color:#777;text-align:center;padding:30px}
+
+/* ADMIN LOGIN GATE */
+.admin-login-wrap{max-width:420px;margin:40px auto}
+.admin-login-card{
+  background:#0b0b0b;border:1px solid rgba(255,154,0,.3);border-radius:16px;
+  padding:28px;text-align:center;box-shadow:0 20px 70px rgba(0,0,0,.5)
+}
+.admin-login-card .lock-ico{font-size:46px;margin-bottom:10px}
+.admin-login-card h3{font-family:'Orbitron';color:#ffc84c;margin-bottom:6px}
+.admin-login-card p{color:#888;margin-bottom:18px;font-size:14px}
+.admin-login-error{
+  display:none;color:#ff6b6b;font-size:13px;margin:-4px 0 12px;font-weight:700
+}
+.admin-logout{
+  float:right;margin-bottom:10px;padding:8px 12px;border-radius:8px;border:1px solid rgba(255,154,0,.3);
+  background:rgba(255,121,0,.08);color:#ffc84c;cursor:pointer;font-weight:800;font-family:'Rajdhani'
+}
+.sync-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#61ff9a;margin-right:6px}
+
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:5000;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(9px)}
+.modal.show{display:grid}
+.modalbox{width:min(520px,100%);background:#0c0c0c;border:1px solid rgba(255,154,0,.4);border-radius:16px;padding:24px}
+.close{float:right;background:#181818;color:#fff;border:1px solid #333;border-radius:7px;padding:6px 10px;cursor:pointer;font-size:18px}
+.modal h2{font-family:'Orbitron';margin-top:10px}
+.modal-icon{font-size:55px;margin:15px 0}
+.modal-price{font-family:'Orbitron';font-size:24px;color:#ffd04c;margin:12px 0}
+.modal p{color:#999;line-height:1.6}
+
+/* TOAST */
+.toast{
+  position:fixed;right:15px;bottom:15px;z-index:6000;background:#101010;border:1px solid rgba(255,154,0,.4);
+  padding:13px 16px;border-radius:10px;transform:translateY(120px);transition:.3s
+}
+.toast.show{transform:none}.toast b{color:#ffd04c}
+
+@media(max-width:900px){
+  .products{grid-template-columns:1fr 1fr}.status{grid-template-columns:1fr}.admin-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .topbar{height:64px;padding:9px}.top-btn{height:38px}.app{inset:64px 0 0}
+  .slide{padding:42px 15px 80px}.products{grid-template-columns:1fr}.grid2{grid-template-columns:1fr}
+  .hero p{font-size:16px}.logo{font-size:13px}
+  .admin-product{grid-template-columns:55px 1fr}.admin-product .admin-actions{grid-column:1/-1}
+}
 </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="logo-wrap">
-    <img id="siteLogo" class="logo-img" alt="Logo">
-    <div class="logo">VATERA <span>ROLEPLAY</span></div>
-  </div>
-  <ul class="nav-links">
-    <li><a href="#home">Home</a></li>
-    <li><a href="#donasi">Donasi</a></li>
-    <li><a href="#benefit">Benefit</a></li>
-    <li><a href="#cara">Cara Donasi</a></li>
-  </ul>
-  <div class="nav-right">
-    <button class="admin-open" onclick="openAdmin()">⚙ ADMIN</button>
-    <a class="discord-btn" id="navDiscord" href="#" target="_blank" rel="noopener">DISCORD</a>
-  </div>
-</nav>
-
-<header class="hero" id="home">
-  <div class="hero-content">
-    <div class="badge">★ OFFICIAL DONATION STORE</div>
-    <h1>VATERA<br><span>ROLEPLAY</span></h1>
-    <p>Dukung perkembangan server GTA SAMP kami. Dapatkan berbagai benefit eksklusif dan bantu membangun komunitas roleplay yang lebih besar.</p>
-    <div class="hero-buttons">
-      <a href="#donasi" class="btn btn-primary">DONASI SEKARANG</a>
-      <a id="heroDiscord" href="#" target="_blank" rel="noopener" class="btn btn-secondary">JOIN DISCORD</a>
-    </div>
-  </div>
+<header class="topbar">
+  <div class="logo">VATERA <span>ROLEPLAY</span></div>
+  <div class="top-spacer"></div>
+  <button class="top-btn" onclick="toggleMenu()" aria-label="Buka menu">⋮</button>
+  <a class="top-btn discord" id="topDiscord" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;text-decoration:none">DISCORD</a>
 </header>
 
-<div class="status">
-  <div class="status-card"><h3>Status Server</h3><strong class="online">ONLINE</strong></div>
-  <div class="status-card"><h3>Players Online</h3><strong id="players">128 / 500</strong></div>
-  <div class="status-card"><h3>IP Server</h3><strong id="serverIP">127.0.0.1:7777</strong></div>
+<div class="menu" id="menu">
+  <div class="menu-title">Pilih halaman</div>
+  <button class="menu-item active" onclick="go(0)">🏠 Beranda</button>
+  <button class="menu-item" onclick="go(1)">🛒 Mau Donasi Apa?</button>
+  <button class="menu-item" onclick="go(2)">👑 Benefit Donasi</button>
+  <button class="menu-item" onclick="go(3)">🏆 Supporter</button>
+  <button class="menu-item" onclick="go(4)">📖 Cara Donasi</button>
+  <button class="menu-item" onclick="go(5)">⚙️ Panel Admin</button>
 </div>
 
-<section id="donasi">
-  <div class="section-title">
-    <div class="mini">Donation Store</div>
-    <h2>PILIH PAKET DONASI</h2>
-    <p>Data katalog diambil langsung dari Firebase dan akan berubah realtime.</p>
-  </div>
-  <div class="products" id="productContainer"></div>
-</section>
+<main class="app">
+<div class="slides" id="slides">
 
-<section id="benefit">
-  <div class="section-title"><div class="mini">Supporter Benefits</div><h2>KEUNTUNGAN DONASI</h2></div>
-  <div class="benefits">
-    <div class="benefit"><div class="icon">👑</div><h3>VIP STATUS</h3><p>Status VIP eksklusif di dalam server.</p></div>
-    <div class="benefit"><div class="icon">💼</div><h3>PEMILIK BISNIS</h3><p>Dapatkan akses atau kepemilikan bisnis eksklusif di dalam server.</p></div>
-    <div class="benefit"><div class="icon">🚘</div><h3>EXCLUSIVE VEHICLE</h3><p>Kendaraan khusus supporter.</p></div>
-  </div>
-</section>
-
-<section id="cara">
-  <div class="section-title"><div class="mini">Donation Guide</div><h2>CARA DONASI</h2></div>
-  <div class="steps">
-    <div class="step"><div class="step-number">01</div><h3>PILIH PRODUK</h3><p>Pilih paket donasi yang kamu inginkan.</p></div>
-    <div class="step"><div class="step-number">02</div><h3>CHECKOUT</h3><p>Klik checkout dan langsung diarahkan ke channel Discord.</p></div>
-    <div class="step"><div class="step-number">03</div><h3>SELESAIKAN</h3><p>Ikuti instruksi admin untuk menyelesaikan pembayaran.</p></div>
-  </div>
-</section>
-
-<div class="cta">
-  <h2>SIAP MENJADI SUPPORTER?</h2>
-  <p>Gabung Discord dan mulai dukung VATERA ROLEPLAY.</p>
-  <a id="ctaDiscord" href="#" target="_blank" rel="noopener" class="btn btn-primary">JOIN DISCORD</a>
-</div>
-
-<footer>
-  <div class="footer-logo">VATERA ROLEPLAY</div>
-  <p>© 2026 VATERA ROLEPLAY. All Rights Reserved.</p>
-  <p style="margin-top:5px;">GTA San Andreas Multiplayer Community</p>
-</footer>
-
-<div class="admin-overlay" id="adminOverlay">
-  <div class="admin-box">
-    <div class="admin-header">
-      <h2>ADMIN PANEL</h2>
-      <button class="close-admin" onclick="closeAdmin()">×</button>
+<!-- 0 HOME -->
+<section class="slide hero-slide">
+  <div class="slide-inner hero-content">
+    <div class="badge">★ OFFICIAL TOKO DONASI</div>
+    <h1>VATERA<br><span>ROLEPLAY</span></h1>
+    <p>Dukung perkembangan server GTA SAMP kami. Dapatkan berbagai benefit eksklusif dan bantu membangun komunitas roleplay yang lebih besar.</p>
+    <div class="actions">
+      <button class="btn primary" onclick="go(1)">DONASI SEKARANG</button>
+      <a class="btn secondary" id="heroDiscord" href="#" target="_blank">JOIN DISCORD</a>
     </div>
-    <div class="admin-content">
+    <div class="status">
+      <div class="card"><small>Status Server</small><strong class="online" id="serverStatus">● ONLINE</strong></div>
+      <div class="card"><small>Players Online</small><strong id="players">128 / 500</strong></div>
+      <div class="card"><small>IP Server</small><strong id="serverIP">208.84.103.75:7037</strong></div>
+    </div>
+  </div>
+</section>
 
-      <div class="login-box" id="loginBox">
-        <h2>ADMIN ACCESS</h2>
-        <p>Masukkan PIN admin untuk membuka panel.</p>
-        <input class="input" type="password" id="adminPin" placeholder="PIN Admin">
-        <button class="admin-btn" onclick="loginAdmin()">MASUK PANEL</button>
-        <div class="error" id="loginError"></div>
+<!-- 1 DONASI -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-title">
+      <div class="mini">TOKO DONASI</div>
+      <h2>MAU DONASI APA?</h2>
+      <p>Pilih kategori dulu, lalu pilih paket yang kamu inginkan.</p>
+    </div>
+
+    <div class="donation-categories" id="donationCategories">
+      <button class="donation-category" onclick="showCategory('vehicle')">
+        <span>🚘</span><b>KENDARAAN</b><small>Kendaraan eksklusif</small>
+      </button>
+      <button class="donation-category" onclick="showCategory('house')">
+        <span>🏠</span><b>RUMAH</b><small>Rumah eksklusif</small>
+      </button>
+      <button class="donation-category" onclick="showCategory('business')">
+        <span>💼</span><b>BISNIS</b><small>Miliki bisnis di server</small>
+      </button>
+      <button class="donation-category" onclick="showCategory('booster')">
+        <span>🚀</span><b>BOOSTER SERVER</b><small>Dukung perkembangan server</small>
+      </button>
+      <button class="donation-category" onclick="showCategory('vip')">
+        <span>👑</span><b>VIP / PENDUKUNG</b><small>Paket pendukung</small>
+      </button>
+    </div>
+
+    <div class="category-products" id="categoryProducts" style="display:none">
+      <button class="back-category" onclick="backToCategories()">← KEMBALI KE PILIHAN</button>
+      <div class="selected-category" id="selectedCategory"></div>
+      <div class="products" id="products"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 BENEFIT -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-title">
+      <div class="mini">SUPPORTER BENEFITS</div>
+      <h2>KEUNTUNGAN DONASI</h2>
+    </div>
+    <div class="grid2" id="benefits"></div>
+  </div>
+</section>
+
+<!-- 3 SUPPORTER -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-title">
+      <div class="mini">COMMUNITY</div>
+      <h2>SUPPORTER VATERA</h2>
+      <p>Apresiasi untuk para supporter yang ikut membangun server.</p>
+    </div>
+    <div class="grid2">
+      <div class="community-card">
+        <h3 style="font-family:Orbitron;margin-bottom:8px">RECENT SUPPORTERS</h3>
+        <div id="recentSupporters"></div>
       </div>
-
-      <div class="dashboard" id="dashboard">
-        <div class="dashboard-top">
-          <div>
-            <h3>DASHBOARD</h3>
-            <small style="color:#777">Mode admin tanpa Firebase Authentication</small>
-          </div>
-          <button class="small-btn" onclick="logoutAdmin()">KUNCI PANEL</button>
-        </div>
-
-        <div class="firebase-status" id="firebaseStatus">Menghubungkan ke Firebase...</div>
-
-        <div class="settings">
-          <div class="setting-card">
-            <h4>Logo Website</h4>
-            <div class="gallery-row">
-              <label class="file-label">
-                📁 PILIH DARI GALERI
-                <input type="file" id="logoFile" accept="image/*" onchange="previewLogo(this)">
-              </label>
-              <button class="small-btn" onclick="removeLogo()">HAPUS LOGO</button>
-            </div>
-            <img id="logoPreview" class="logo-preview" alt="Preview logo">
-            <div class="upload-note">Pilih gambar langsung dari galeri HP. File akan diupload ke Firebase Storage.</div>
-            <button class="admin-btn" style="margin-top:12px" onclick="saveLogo()">SIMPAN LOGO</button>
-          </div>
-
-          <div class="setting-card">
-            <h4>Discord Checkout</h4>
-            <input class="input" id="discordInput" placeholder="https://discord.com/channels/server/channel">
-            <button class="admin-btn" onclick="saveSettings()">SIMPAN DISCORD</button>
-          </div>
-
-          <div class="setting-card">
-            <h4>Informasi Server</h4>
-            <input class="input" id="ipInput" placeholder="IP:PORT">
-            <input class="input" id="playersInput" placeholder="128 / 500">
-            <button class="admin-btn" onclick="saveSettings()">SIMPAN SERVER</button>
-          </div>
-        </div>
-
-        <div class="setting-card" style="margin-bottom:25px">
-          <h4 id="formTitle">Tambah Produk</h4>
-          <div class="form-grid">
-            <div class="form-group"><label>Nama Produk</label><input class="input" id="productName" placeholder="VIP GOLD"></div>
-            <div class="form-group"><label>Harga</label><input class="input" id="productPrice" type="number" placeholder="100000"></div>
-            <div class="form-group"><label>Icon</label><input class="input" id="productIcon" placeholder="👑"></div>
-
-            <div class="form-group full">
-              <label>Gambar Produk</label>
-              <div class="gallery-row">
-                <label class="file-label">
-                  📁 PILIH DARI GALERI
-                  <input type="file" id="productFile" accept="image/*" onchange="previewProductImage(this)">
-                </label>
-                <button class="small-btn" onclick="clearProductImage()">HAPUS GAMBAR</button>
-              </div>
-              <div class="preview-box" id="productPreviewBox"><img id="productPreview" alt="Preview"></div>
-              <div class="upload-note">Tidak perlu URL. Pilih gambar dari galeri HP, lalu simpan produk.</div>
-            </div>
-
-            <div class="form-group full"><label>Deskripsi</label><input class="input" id="productDescription" placeholder="Deskripsi produk..."></div>
-          </div>
-          <button class="save-product" onclick="saveProduct()">SIMPAN PRODUK</button>
-          <button class="small-btn" id="cancelEdit" onclick="cancelEdit()" style="display:none;margin-left:7px">BATAL</button>
-        </div>
-
-        <h3 style="margin-bottom:15px">DAFTAR PRODUK</h3>
-        <div id="adminProducts"></div>
+      <div class="community-card">
+        <h3 style="font-family:Orbitron;margin-bottom:8px">TOP SUPPORTERS</h3>
+        <div id="topSupporters"></div>
       </div>
     </div>
   </div>
+</section>
+
+<!-- 4 CARA DONASI -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-title">
+      <div class="mini">DONATION GUIDE</div>
+      <h2>CARA DONASI</h2>
+    </div>
+    <div class="grid2">
+      <div class="step"><b>01</b><h3>PILIH PRODUK</h3><p>Pilih paket donasi yang kamu inginkan dari katalog.</p></div>
+      <div class="step"><b>02</b><h3>CHECKOUT</h3><p>Klik checkout dan kamu akan diarahkan ke Discord.</p></div>
+      <div class="step"><b>03</b><h3>KONFIRMASI</h3><p>Hubungi admin dan ikuti instruksi pembayaran.</p></div>
+      <div class="step"><b>04</b><h3>SELESAI</h3><p>Benefit akan diproses sesuai paket yang kamu beli.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ADMIN -->
+<section class="slide">
+  <div class="slide-inner">
+    <div class="section-title">
+      <div class="mini">CONTROL CENTER</div>
+      <h2>PANEL ADMIN</h2>
+      <p><span class="sync-dot"></span>Data tersimpan realtime di Firebase.</p>
+    </div>
+
+    <div class="admin-login-wrap" id="adminLoginBox">
+      <div class="admin-login-card">
+        <div class="lock-ico">🔒</div>
+        <h3>AREA TERBATAS</h3>
+        <p>Masukkan password admin untuk mengelola toko.</p>
+        <input class="input" type="password" id="adminPassInput" placeholder="Password admin" onkeydown="if(event.key==='Enter')adminLogin()">
+        <div class="admin-login-error" id="adminLoginError">Password salah, coba lagi.</div>
+        <button class="btn primary" style="width:100%" onclick="adminLogin()">MASUK</button>
+      </div>
+    </div>
+
+    <div class="admin-box" id="adminPanelBox" style="display:none">
+      <button class="admin-logout" onclick="adminLogout()">🔒 LOGOUT</button>
+      <div style="clear:both"></div>
+
+      <div class="admin-card" style="margin-bottom:16px">
+        <h3>🔥 Setting Firebase</h3>
+        <div id="firebaseStatus" style="margin-bottom:12px;font-weight:800;font-size:14px"></div>
+        <input class="input" id="fbApiKey" placeholder="apiKey">
+        <input class="input" id="fbAuthDomain" placeholder="authDomain, contoh: projectmu.firebaseapp.com">
+        <input class="input" id="fbProjectId" placeholder="projectId">
+        <input class="input" id="fbStorageBucket" placeholder="storageBucket, contoh: projectmu.appspot.com">
+        <input class="input" id="fbSenderId" placeholder="messagingSenderId">
+        <input class="input" id="fbAppId" placeholder="appId">
+        <div class="file-note">📋 Semua nilai ini diambil dari Firebase Console → Project Settings → General → "Your apps". Setelah simpan, halaman akan dimuat ulang untuk konek ke Firebase kamu.</div>
+        <div class="admin-actions">
+          <button class="btn primary" onclick="saveFirebaseSettings()">SIMPAN & HUBUNGKAN</button>
+          <button class="smallbtn" onclick="clearFirebaseSettings()">HAPUS CONFIG</button>
+        </div>
+      </div>
+
+      <div class="admin-grid">
+        <div class="admin-card">
+          <h3>⚙️ Pengaturan Website</h3>
+          <input class="input" id="setDiscord" placeholder="Link Discord">
+          <input class="input" id="setIP" placeholder="IP:PORT Server">
+          <input class="input" id="setPlayers" placeholder="Players Online">
+          <button class="btn primary" onclick="saveSettings()">SIMPAN PENGATURAN</button>
+        </div>
+
+        <div class="admin-card">
+          <h3>➕ Tambah / Edit Produk</h3>
+          <input class="input" id="pName" placeholder="Nama produk">
+          <input class="input" id="pPrice" type="number" placeholder="Harga, contoh 50000">
+          <input class="input" id="pIcon" placeholder="Icon, contoh 👑">
+          <input class="input" id="pDesc" placeholder="Deskripsi produk">
+          <input class="input" id="pImage" type="file" accept="image/*">
+          <div class="file-note">🖼️ Pilih gambar langsung dari galeri HP. Tidak perlu URL.</div>
+          <div class="admin-actions">
+            <button class="btn primary" onclick="saveProduct()">SIMPAN PRODUK</button>
+            <button class="smallbtn" onclick="cancelEdit()">BATAL</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-card" style="margin-top:16px">
+        <h3>🧩 Edit Benefit</h3>
+        <div id="benefitAdmin"></div>
+        <button class="btn primary" onclick="addBenefit()">+ TAMBAH BENEFIT</button>
+      </div>
+
+      <div class="admin-card" style="margin-top:16px">
+        <h3>👥 Recent Supporters</h3>
+        <div id="supportAdmin"></div>
+        <button class="btn primary" onclick="addSupporter()">+ TAMBAH SUPPORTER</button>
+      </div>
+
+      <div class="admin-card" style="margin-top:16px">
+        <h3>📦 Daftar Produk</h3>
+        <div class="admin-hint">Kategori otomatis berdasarkan nama/deskripsi produk. Contoh: Vehicle, House, Bisnis, Booster, atau VIP.</div>
+<div id="adminProducts"></div>
+      </div>
+
+      <div style="margin-top:15px;color:#777;font-size:12px">
+        🔥 Data disimpan realtime di Firebase Firestore — semua pengunjung langsung lihat perubahan admin.
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <button class="close" onclick="closeModal()">×</button>
+    <div class="modal-icon" id="modalIcon"></div>
+    <h2 id="modalName"></h2>
+    <div class="modal-price" id="modalPrice"></div>
+    <p id="modalDesc"></p>
+    <a id="modalBuy" class="btn primary" style="margin-top:20px;width:100%" target="_blank">CHECKOUT VIA DISCORD</a>
+  </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-storage-compat.js"></script>
+<div class="toast" id="toast">🔥 <b>VATERA</b> — perubahan tersimpan.</div>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
 <script>
-/* =====================================================
-   FIREBASE CONFIG VATERARP
-   Firebase Authentication SUDAH DIHAPUS.
-===================================================== */
-const firebaseConfig = {
-  apiKey: "AIzaSyBMlI9U4LsnSdHqv1VVcui_fslfdADQQ5I",
-  authDomain: "vaterarp.firebaseapp.com",
-  projectId: "vaterarp",
-  storageBucket: "vaterarp.firebasestorage.app",
-  messagingSenderId: "727915583132",
-  appId: "1:727915583132:web:4097bb52c345e8973e3f59"
+/* =========================================================
+   1) FIREBASE CONFIG
+   Sekarang diisi lewat panel admin (kartu "🔥 Setting Firebase"),
+   tidak perlu edit kode lagi. Config disimpan di localStorage HP/
+   browser kamu. Object di bawah cuma fallback kalau belum diisi.
+   ========================================================= */
+const FIREBASE_CONFIG_KEY="vatera_firebase_config";
+const emptyFirebaseConfig = {
+  apiKey:"", authDomain:"", projectId:"", storageBucket:"", messagingSenderId:"", appId:""
+};
+function loadFirebaseConfig(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(FIREBASE_CONFIG_KEY));
+    return (saved && saved.apiKey && saved.projectId) ? saved : null;
+  }catch(e){return null}
+}
+
+/* =========================================================
+   2) PASSWORD ADMIN — GANTI password ini sebelum publish
+   Catatan: ini proteksi client-side (buat cegah orang iseng),
+   bukan keamanan tingkat tinggi. Password tetap terlihat di
+   source code kalau dibuka lewat "view source".
+   ========================================================= */
+const ADMIN_PASSWORD = "vatera2026";
+const LOCAL_KEY = "vatera_test_v2";
+
+const defaults={
+  discord:"https://discord.gg/yourserver",
+  ip:"208.84.103.75:7037",
+  players:"128 / 500",
+  products:[
+    {name:"VIP SILVER",price:50000,icon:"👑",desc:"Status VIP eksklusif, bonus benefit supporter, dan akses fitur khusus server.",image:"",tag:"POPULAR"},
+    {name:"VIP GOLD",price:100000,icon:"💎",desc:"Benefit VIP Gold dengan fasilitas premium dan akses eksklusif di dalam server.",image:"",tag:"BEST SELLER"},
+    {name:"PEMILIK BISNIS",price:150000,icon:"💼",desc:"Dapatkan akses atau kepemilikan bisnis eksklusif di dalam server.",image:"",tag:"LIMITED"},
+    {name:"EXCLUSIVE VEHICLE",price:75000,icon:"🚘",desc:"Kendaraan eksklusif untuk digunakan di server.",image:"",tag:""},
+    {name:"EXCLUSIVE HOUSE",price:150000,icon:"🏠",desc:"Rumah eksklusif dengan lokasi dan benefit khusus supporter.",image:"",tag:""},
+    {name:"ULTIMATE SUPPORTER",price:250000,icon:"🔥",desc:"Paket pendukung tertinggi dengan kombinasi benefit premium paling lengkap.",image:"",tag:""}
+  ],
+  benefits:[
+    {icon:"👑",name:"VIP STATUS",desc:"Status VIP eksklusif di dalam server."},
+    {icon:"💼",name:"PEMILIK BISNIS",desc:"Akses atau kepemilikan bisnis eksklusif."},
+    {icon:"🚘",name:"EXCLUSIVE VEHICLE",desc:"Kendaraan khusus untuk supporter."}
+  ],
+  supporters:[
+    {name:"Rzky",product:"VIP GOLD",amount:100000},
+    {name:"Dimas",product:"VIP SILVER",amount:50000},
+    {name:"Fahri",product:"PEMILIK BISNIS",amount:150000}
+  ]
 };
 
-firebase.initializeApp(firebaseConfig);
+let data=structuredClone(defaults), editIndex=-1;
+let useFirebase=false, db=null, docRef=null;
 
-const db = firebase.firestore();
-const storage = firebase.storage();
+function toast(t){const x=document.getElementById("toast");x.innerHTML="🔥 <b>VATERA</b> — "+t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
+function rupiah(n){return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(Number(n)||0)}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
 
-const settingsRef = db.collection("settings").doc("main");
-const productsRef = db.collection("products");
-
-const DEFAULT_DISCORD = "https://discord.gg/K9ebs4Dh3A";
-const DEFAULT_IP = "208.84.103.75:7037";
-const DEFAULT_PLAYERS = "∞";
-
-/* GANTI PIN INI SEBELUM UPLOAD KE GITHUB */
-const ADMIN_PIN = "vateraontop";
-
-const DEFAULT_PRODUCTS = [
-  {name:"DONASI BRONZE",price:25000,icon:"💰",image:"",description:"Paket donasi awal untuk mendukung perkembangan server."},
-  {name:"VIP SILVER",price:50000,icon:"👑",image:"",description:"Dapatkan status VIP dan berbagai keuntungan eksklusif."},
-  {name:"VIP GOLD",price:100000,icon:"💎",image:"",description:"Paket premium dengan benefit terbaik untuk supporter."},
-  {name:"EXCLUSIVE CAR",price:75000,icon:"🚗",image:"",description:"Dapatkan kendaraan eksklusif untuk digunakan di server."},
-  {name:"EXCLUSIVE HOUSE",price:150000,icon:"🏠",image:"",description:"Miliki rumah eksklusif dan tunjukkan statusmu."},
-  {name:"ULTIMATE SUPPORTER",price:250000,icon:"🔥",image:"",description:"Paket supporter tertinggi dengan benefit paling lengkap."}
-];
-
-let discord = DEFAULT_DISCORD;
-let serverIP = DEFAULT_IP;
-let players = DEFAULT_PLAYERS;
-let siteLogo = "";
-let products = [];
-let editId = null;
-let editingOldImage = "";
-let productsUnsubscribe = null;
-let settingsUnsubscribe = null;
-let adminUnlocked = false;
-
-function rupiah(n){
-  return new Intl.NumberFormat("id-ID",{style:"currency",currency:"IDR",maximumFractionDigits:0}).format(Number(n)||0);
+/* =========================================================
+   3) LOAD & SAVE
+   Coba pakai Firebase Firestore dulu (realtime buat semua
+   pengunjung). Kalau Firebase gagal konek — misalnya preview
+   di Spck Editor sering tidak bisa akses internet/CDN — otomatis
+   fallback ke localStorage supaya website tetap jalan normal.
+   ========================================================= */
+function loadLocal(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(LOCAL_KEY));
+    return saved ? {...defaults,...saved} : structuredClone(defaults);
+  }catch(e){return structuredClone(defaults)}
 }
-
-function escapeHTML(text){
-  return String(text ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+function saveLocal(){
+  try{localStorage.setItem(LOCAL_KEY,JSON.stringify(data))}catch(e){console.error(e)}
 }
-
-function setFirebaseStatus(message, ok=false){
-  const el=document.getElementById("firebaseStatus");
-  if(!el)return;
-  el.textContent=message;
-  el.className="firebase-status "+(ok?"ok":"bad");
+function fallbackToLocal(msg){
+  useFirebase=false;
+  data=loadLocal();
+  renderAll();
+  if(msg)toast(msg);
 }
-
-function updateDiscordLinks(){
-  document.getElementById("navDiscord").href=discord;
-  document.getElementById("heroDiscord").href=discord;
-  document.getElementById("ctaDiscord").href=discord;
-}
-
-function updateLogo(){
-  const img=document.getElementById("siteLogo");
-  if(siteLogo){
-    img.src=siteLogo;
-    img.style.display="block";
-  }else{
-    img.removeAttribute("src");
-    img.style.display="none";
+function initFirebase(){
+  const cfg=loadFirebaseConfig();
+  if(!cfg){
+    fallbackToLocal();
+    return;
   }
+  try{
+    if(typeof firebase==="undefined") throw new Error("Firebase SDK gagal dimuat (cek koneksi internet / CDN diblokir).");
+    firebase.initializeApp(cfg);
+    db=firebase.firestore();
+    docRef=db.collection("vatera").doc("store");
+    docRef.onSnapshot(snap=>{
+      useFirebase=true;
+      if(snap.exists){
+        data={...defaults,...snap.data()};
+      }else{
+        data=structuredClone(defaults);
+        docRef.set(data).catch(err=>console.error("Gagal buat data awal:",err));
+      }
+      renderAll();
+    },err=>{
+      console.error("Firebase error:",err);
+      fallbackToLocal("Gagal konek Firebase, sementara pakai penyimpanan lokal.");
+    });
+  }catch(err){
+    console.error("Firebase init error:",err);
+    fallbackToLocal("Firebase belum konek di preview ini, sementara pakai penyimpanan lokal.");
+  }
+}
+function saveData(){
+  if(useFirebase && docRef){
+    docRef.set(data)
+      .then(()=>toast("Perubahan tersimpan ke Firebase."))
+      .catch(err=>{console.error(err);saveLocal();toast("Gagal simpan ke Firebase, disimpan lokal.")});
+  }else{
+    saveLocal();
+    toast("Perubahan tersimpan lokal (Firebase belum konek).");
+  }
+  renderAll();
+}
+
+function toggleMenu(){document.getElementById("menu").classList.toggle("open")}
+function go(i){
+  document.getElementById("slides").style.transform=`translateX(-${i*100}%)`;
+  document.querySelectorAll(".menu-item").forEach((x,n)=>x.classList.toggle("active",n===i));
+  document.getElementById("menu").classList.remove("open");
+  document.querySelectorAll(".slide")[i].scrollTop=0;
+  if(i===5)showAdminGate();
+}
+document.addEventListener("click",e=>{
+  const menu=document.getElementById("menu"),btn=document.querySelector(".top-btn");
+  if(menu.classList.contains("open") && !menu.contains(e.target) && !btn.contains(e.target))menu.classList.remove("open");
+});
+
+/* =========================================================
+   4) LOGIN ADMIN — tidak bergantung ke Firebase sama sekali,
+   jadi tetap bisa dipakai walau Firebase belum/gagal konek.
+   ========================================================= */
+function isAdminAuthed(){return sessionStorage.getItem("vatera_admin_ok")==="1"}
+function showAdminGate(){
+  const authed=isAdminAuthed();
+  document.getElementById("adminLoginBox").style.display=authed?"none":"block";
+  document.getElementById("adminPanelBox").style.display=authed?"block":"none";
+  document.getElementById("adminLoginError").style.display="none";
+  document.getElementById("adminPassInput").value="";
+  if(authed)fillFirebaseSettingsForm();
+}
+
+/* =========================================================
+   5) SETTING FIREBASE DARI PANEL ADMIN
+   ========================================================= */
+function fillFirebaseSettingsForm(){
+  const cfg=loadFirebaseConfig()||emptyFirebaseConfig;
+  document.getElementById("fbApiKey").value=cfg.apiKey||"";
+  document.getElementById("fbAuthDomain").value=cfg.authDomain||"";
+  document.getElementById("fbProjectId").value=cfg.projectId||"";
+  document.getElementById("fbStorageBucket").value=cfg.storageBucket||"";
+  document.getElementById("fbSenderId").value=cfg.messagingSenderId||"";
+  document.getElementById("fbAppId").value=cfg.appId||"";
+  const status=document.getElementById("firebaseStatus");
+  if(useFirebase){
+    status.textContent="🟢 Firebase konek — data tersimpan realtime.";
+    status.style.color="#61ff9a";
+  }else if(cfg && cfg.apiKey){
+    status.textContent="🟡 Config ada tapi belum konek — cek lagi nilai config atau koneksi internet.";
+    status.style.color="#ffc84c";
+  }else{
+    status.textContent="⚪ Firebase belum di-setting — data sementara disimpan lokal di HP ini.";
+    status.style.color="#999";
+  }
+}
+function saveFirebaseSettings(){
+  const cfg={
+    apiKey:document.getElementById("fbApiKey").value.trim(),
+    authDomain:document.getElementById("fbAuthDomain").value.trim(),
+    projectId:document.getElementById("fbProjectId").value.trim(),
+    storageBucket:document.getElementById("fbStorageBucket").value.trim(),
+    messagingSenderId:document.getElementById("fbSenderId").value.trim(),
+    appId:document.getElementById("fbAppId").value.trim()
+  };
+  if(!cfg.apiKey||!cfg.projectId){
+    alert("Minimal apiKey dan projectId harus diisi.");
+    return;
+  }
+  localStorage.setItem(FIREBASE_CONFIG_KEY,JSON.stringify(cfg));
+  toast("Config Firebase tersimpan, menghubungkan ulang...");
+  setTimeout(()=>location.reload(),900);
+}
+function clearFirebaseSettings(){
+  if(!confirm("Hapus config Firebase? Website akan pakai penyimpanan lokal lagi."))return;
+  localStorage.removeItem(FIREBASE_CONFIG_KEY);
+  toast("Config Firebase dihapus.");
+  setTimeout(()=>location.reload(),900);
+}
+function adminLogin(){
+  const val=document.getElementById("adminPassInput").value;
+  if(val===ADMIN_PASSWORD){
+    sessionStorage.setItem("vatera_admin_ok","1");
+    showAdminGate();
+    toast("Login admin berhasil.");
+  }else{
+    document.getElementById("adminLoginError").style.display="block";
+  }
+}
+function adminLogout(){
+  sessionStorage.removeItem("vatera_admin_ok");
+  showAdminGate();
+  toast("Berhasil logout.");
+}
+
+let activeCategory="";
+
+function productCategory(p){
+  const n=(p.name||"").toLowerCase();
+  const d=(p.desc||"").toLowerCase();
+  if(n.includes("vehicle") || n.includes("kendaraan") || d.includes("kendaraan")) return "vehicle";
+  if(n.includes("house") || n.includes("rumah") || d.includes("rumah")) return "house";
+  if(n.includes("bisnis") || n.includes("business") || d.includes("bisnis") || d.includes("business")) return "business";
+  if(n.includes("booster") || n.includes("booster") || d.includes("booster")) return "booster";
+  return "vip";
+}
+
+function showCategory(category){
+  activeCategory=category;
+  const names={
+    vehicle:["🚘","KENDARAAN"],
+    house:["🏠","RUMAH"],
+    business:["💼","BISNIS"],
+    booster:["🚀","BOOSTER SERVER"],
+    vip:["👑","VIP / PENDUKUNG"]
+  };
+  const info=names[category]||names.vip;
+  document.getElementById("donationCategories").style.display="none";
+  document.getElementById("categoryProducts").style.display="block";
+  document.getElementById("selectedCategory").innerHTML=info[0]+" <span>"+info[1]+"</span>";
+  renderProducts();
+}
+
+function backToCategories(){
+  activeCategory="";
+  document.getElementById("categoryProducts").style.display="none";
+  document.getElementById("donationCategories").style.display="grid";
 }
 
 function renderProducts(){
-  const container=document.getElementById("productContainer");
-  container.innerHTML="";
-  if(!products.length){
-    container.innerHTML='<div style="grid-column:1/-1;text-align:center;color:#777;padding:40px">Belum ada produk.</div>';
-    return;
-  }
+  const box=document.getElementById("products");
+  let list=data.products.map((p,i)=>({p,i}));
+  if(activeCategory) list=list.filter(x=>productCategory(x.p)===activeCategory);
 
-  products.forEach((p,index)=>{
-    const image=p.image ? `<img class="product-image" src="${escapeHTML(p.image)}" onerror="this.style.display='none'">` : "";
-    const popular=index===1 ? '<div class="popular">POPULAR</div>' : "";
-    container.innerHTML += `
-      <div class="product">
-        ${popular}
-        ${image}
-        <div class="product-icon">${escapeHTML(p.icon || "⭐")}</div>
-        <h3>${escapeHTML(p.name)}</h3>
-        <p>${escapeHTML(p.description)}</p>
-        <div class="price">${rupiah(p.price)}</div>
-        <a href="${escapeHTML(discord)}" target="_blank" rel="noopener" class="buy">CHECKOUT</a>
-      </div>`;
-  });
+  box.innerHTML=list.length?list.map(({p,i})=>`
+    <div class="product" onclick="detail(${i})">
+      ${p.tag?`<span class="tag">${esc(p.tag)}</span>`:""}
+      ${p.image?`<img class="product-img" src="${p.image}" onerror="this.style.display='none'">`:""}
+      <div class="product-icon">${esc(p.icon||"⭐")}</div>
+      <h3>${esc(p.name)}</h3>
+      <p>${esc(p.desc)}</p>
+      <div class="price">${rupiah(p.price)}</div>
+      <button class="buy" onclick="event.stopPropagation();checkout()">CHECKOUT</button>
+    </div>`).join(""):`<div class="empty" style="grid-column:1/-1">
+      Belum ada produk di kategori ini.<br>
+      <button class="back-category" style="margin-top:14px" onclick="backToCategories()">← PILIH KATEGORI LAIN</button>
+    </div>`;
 }
-
+function renderBenefits(){
+  document.getElementById("benefits").innerHTML=data.benefits.map(b=>`
+    <div class="benefit"><div class="big">${esc(b.icon)}</div><h3>${esc(b.name)}</h3><p>${esc(b.desc)}</p></div>`).join("");
+  document.getElementById("benefitAdmin").innerHTML=data.benefits.map((b,i)=>`
+    <div style="display:grid;grid-template-columns:70px 1fr;gap:8px;margin-bottom:9px">
+      <input class="input" value="${esc(b.icon)}" onchange="data.benefits[${i}].icon=this.value;saveData()">
+      <input class="input" value="${esc(b.name)}" onchange="data.benefits[${i}].name=this.value;saveData()">
+      <input class="input" style="grid-column:1/-1" value="${esc(b.desc)}" onchange="data.benefits[${i}].desc=this.value;saveData()">
+      <button class="smallbtn" style="grid-column:1/-1" onclick="data.benefits.splice(${i},1);saveData()">HAPUS BENEFIT</button>
+    </div>`).join("");
+}
+function renderSupporters(){
+  document.getElementById("recentSupporters").innerHTML=data.supporters.slice(0,5).map(s=>`
+    <div class="support-row"><div class="name"><b>${esc(s.name)}</b><span>${esc(s.product)}</span></div><div class="amount">${rupiah(s.amount)}</div></div>`).join("")||'<div class="empty">Belum ada supporter.</div>';
+  const top=[...data.supporters].sort((a,b)=>b.amount-a.amount).slice(0,5);
+  document.getElementById("topSupporters").innerHTML=top.map((s,i)=>`
+    <div class="rank"><div class="rankleft"><div class="num">${i+1}</div><b>${esc(s.name)}</b></div><div class="amount">${rupiah(s.amount)}</div></div>`).join("")||'<div class="empty">Belum ada supporter.</div>';
+  document.getElementById("supportAdmin").innerHTML=data.supporters.map((s,i)=>`
+    <div class="admin-product">
+      <div class="admin-thumb">👤</div>
+      <div><b>${esc(s.name)}</b><div style="color:#777">${esc(s.product)} · ${rupiah(s.amount)}</div></div>
+      <button class="smallbtn" onclick="data.supporters.splice(${i},1);saveData()">HAPUS</button>
+    </div>`).join("")||'<div class="empty">Belum ada supporter.</div>';
+}
 function renderAdminProducts(){
-  const container=document.getElementById("adminProducts");
-  container.innerHTML="";
-  if(!products.length){
-    container.innerHTML='<div style="color:#777;padding:20px">Belum ada produk.</div>';
-    return;
-  }
-
-  products.forEach(p=>{
-    const image=p.image
-      ? `<img src="${escapeHTML(p.image)}" onerror="this.style.display='none'">`
-      : `<div style="width:90px;height:70px;display:flex;align-items:center;justify-content:center;font-size:30px;background:#171717;border-radius:8px">${escapeHTML(p.icon||"⭐")}</div>`;
-
-    container.innerHTML += `
-      <div class="product-admin">
-        ${image}
-        <div class="product-admin-info">
-          <h4>${escapeHTML(p.name)}</h4>
-          <p>${escapeHTML(p.description)}</p>
-          <div class="product-admin-price">${rupiah(p.price)}</div>
-        </div>
-        <div class="admin-actions">
-          <button class="edit-btn" onclick="editProduct('${escapeHTML(p.id)}')">EDIT</button>
-          <button class="delete-btn" onclick="deleteProduct('${escapeHTML(p.id)}')">HAPUS</button>
-        </div>
-      </div>`;
+  document.getElementById("adminProducts").innerHTML=data.products.map((p,i)=>`
+    <div class="admin-product">
+      ${p.image?`<img class="admin-thumb" src="${p.image}">`:`<div class="admin-thumb">${esc(p.icon||"⭐")}</div>`}
+      <div><b>${esc(p.name)}</b><div style="color:#777">${rupiah(p.price)}</div></div>
+      <div class="admin-actions"><button class="smallbtn" onclick="editProduct(${i})">EDIT</button><button class="smallbtn" onclick="deleteProduct(${i})">HAPUS</button></div>
+    </div>`).join("")||'<div class="empty">Belum ada produk.</div>';
+}
+function renderAll(){
+  document.getElementById("players").textContent=data.players;
+  document.getElementById("serverIP").textContent=data.ip;
+  document.getElementById("setDiscord").value=data.discord;
+  document.getElementById("setIP").value=data.ip;
+  document.getElementById("setPlayers").value=data.players;
+  updateLinks();renderProducts();renderBenefits();renderSupporters();renderAdminProducts();
+}
+function updateLinks(){
+  ["topDiscord","heroDiscord"].forEach(id=>document.getElementById(id).href=data.discord);
+}
+function saveSettings(){
+  data.discord=document.getElementById("setDiscord").value.trim()||defaults.discord;
+  data.ip=document.getElementById("setIP").value.trim()||defaults.ip;
+  data.players=document.getElementById("setPlayers").value.trim()||defaults.players;
+  saveData();
+}
+function readImage(file,cb){
+  if(!file){cb("");return}
+  const r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(file);
+}
+function saveProduct(){
+  const name=document.getElementById("pName").value.trim(),price=Number(document.getElementById("pPrice").value);
+  if(!name||!price){alert("Nama dan harga wajib diisi.");return}
+  const obj={name,price,icon:document.getElementById("pIcon").value.trim()||"⭐",desc:document.getElementById("pDesc").value.trim(),image:editIndex>=0?data.products[editIndex].image:"",tag:""};
+  const file=document.getElementById("pImage").files[0];
+  readImage(file,img=>{
+    if(img)obj.image=img;
+    if(editIndex>=0)data.products[editIndex]=obj;else data.products.push(obj);
+    cancelEdit();saveData();
   });
 }
-
-function openAdmin(){
-  document.getElementById("adminOverlay").classList.add("active");
-
-  if(adminUnlocked){
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("dashboard").classList.add("active");
-    fillSettingsForm();
-  }else{
-    document.getElementById("loginBox").style.display="block";
-    document.getElementById("dashboard").classList.remove("active");
-    setTimeout(()=>document.getElementById("adminPin").focus(),100);
-  }
+function editProduct(i){
+  editIndex=i;const p=data.products[i];
+  document.getElementById("pName").value=p.name;document.getElementById("pPrice").value=p.price;
+  document.getElementById("pIcon").value=p.icon||"";document.getElementById("pDesc").value=p.desc||"";
+  document.getElementById("pImage").value="";
+  go(5);toast("Mode edit produk aktif.");
 }
-
-function closeAdmin(){
-  document.getElementById("adminOverlay").classList.remove("active");
-}
-
-function loginAdmin(){
-  const pin=document.getElementById("adminPin").value;
-  const error=document.getElementById("loginError");
-
-  if(pin===ADMIN_PIN){
-    adminUnlocked=true;
-    error.style.display="none";
-    document.getElementById("adminPin").value="";
-    document.getElementById("loginBox").style.display="none";
-    document.getElementById("dashboard").classList.add("active");
-    fillSettingsForm();
-  }else{
-    error.textContent="PIN admin salah.";
-    error.style.display="block";
-  }
-}
-
-function logoutAdmin(){
-  adminUnlocked=false;
-  cancelEdit();
-  document.getElementById("dashboard").classList.remove("active");
-  document.getElementById("loginBox").style.display="block";
-  document.getElementById("adminPin").value="";
-}
-
-function fillSettingsForm(){
-  document.getElementById("discordInput").value=discord;
-  document.getElementById("ipInput").value=serverIP;
-  document.getElementById("playersInput").value=players;
-  if(siteLogo){
-    document.getElementById("logoPreview").src=siteLogo;
-    document.getElementById("logoPreview").style.display="block";
-  }else{
-    document.getElementById("logoPreview").style.display="none";
-  }
-  renderAdminProducts();
-}
-
-async function saveSettings(){
-  if(!adminUnlocked){
-    alert("Silakan buka panel admin.");
-    return;
-  }
-
-  const newDiscord=document.getElementById("discordInput").value.trim();
-  const newIP=document.getElementById("ipInput").value.trim();
-  const newPlayers=document.getElementById("playersInput").value.trim();
-
-  if(!newDiscord || !newIP || !newPlayers){
-    alert("Discord, IP dan player wajib diisi.");
-    return;
-  }
-
-  try{
-    await settingsRef.set({
-      discord:newDiscord,
-      serverIP:newIP,
-      players:newPlayers,
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    },{merge:true});
-
-    alert("Pengaturan berhasil disimpan dan realtime.");
-  }catch(e){
-    console.error(e);
-    alert("Gagal menyimpan. Cek Firestore Rules.");
-  }
-}
-
-function previewLogo(input){
-  const file=input.files && input.files[0];
-  if(!file)return;
-  if(!file.type.startsWith("image/")){
-    alert("File harus berupa gambar.");
-    input.value="";
-    return;
-  }
-  const url=URL.createObjectURL(file);
-  const preview=document.getElementById("logoPreview");
-  preview.src=url;
-  preview.style.display="block";
-}
-
-async function saveLogo(){
-  if(!adminUnlocked)return alert("Silakan buka panel admin.");
-
-  const input=document.getElementById("logoFile");
-  const file=input.files && input.files[0];
-
-  if(!file && !siteLogo){
-    alert("Pilih gambar logo dari galeri terlebih dahulu.");
-    return;
-  }
-
-  if(!file){
-    alert("Logo yang tersimpan masih digunakan.");
-    return;
-  }
-
-  try{
-    setFirebaseStatus("Mengupload logo...",false);
-
-    const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-    const path="website/logo_"+Date.now()+"_"+safeName;
-    const ref=storage.ref().child(path);
-
-    await ref.put(file);
-    const url=await ref.getDownloadURL();
-
-    await settingsRef.set({
-      logo:url,
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    },{merge:true});
-
-    input.value="";
-    alert("Logo berhasil disimpan dari galeri.");
-  }catch(e){
-    console.error(e);
-    alert("Upload logo gagal: "+e.message);
-  }
-}
-
-async function removeLogo(){
-  if(!adminUnlocked)return;
-  if(!siteLogo){
-    alert("Belum ada logo.");
-    return;
-  }
-
-  if(!confirm("Hapus logo website?"))return;
-
-  try{
-    await settingsRef.set({
-      logo:"",
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    },{merge:true});
-
-    siteLogo="";
-    updateLogo();
-    document.getElementById("logoPreview").style.display="none";
-    alert("Logo berhasil dihapus.");
-  }catch(e){
-    console.error(e);
-    alert("Gagal menghapus logo.");
-  }
-}
-
-function previewProductImage(input){
-  const file=input.files && input.files[0];
-  if(!file)return;
-
-  if(!file.type.startsWith("image/")){
-    alert("File harus berupa gambar.");
-    input.value="";
-    return;
-  }
-
-  const url=URL.createObjectURL(file);
-  document.getElementById("productPreview").src=url;
-  document.getElementById("productPreviewBox").style.display="block";
-}
-
-function clearProductImage(){
-  document.getElementById("productFile").value="";
-  document.getElementById("productPreview").removeAttribute("src");
-  document.getElementById("productPreviewBox").style.display="none";
-  if(editId)editingOldImage="";
-}
-
-async function uploadProductImage(file){
-  if(!file)return "";
-
-  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-  const path="products/"+Date.now()+"_"+Math.random().toString(36).slice(2)+"_"+safeName;
-  const ref=storage.ref().child(path);
-
-  await ref.put(file);
-  return await ref.getDownloadURL();
-}
-
-async function saveProduct(){
-  if(!adminUnlocked){
-    alert("Silakan buka panel admin.");
-    return;
-  }
-
-  const name=document.getElementById("productName").value.trim();
-  const price=Number(document.getElementById("productPrice").value);
-  const icon=document.getElementById("productIcon").value.trim() || "⭐";
-  const description=document.getElementById("productDescription").value.trim();
-  const file=document.getElementById("productFile").files[0];
-
-  if(!name || !price || !description){
-    alert("Nama, harga dan deskripsi wajib diisi.");
-    return;
-  }
-
-  try{
-    let image=editingOldImage || "";
-
-    if(file){
-      setFirebaseStatus("Mengupload gambar produk...",false);
-      image=await uploadProductImage(file);
-    }
-
-    const data={
-      name,
-      price,
-      icon,
-      image,
-      description,
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    };
-
-    if(editId){
-      await productsRef.doc(editId).update(data);
-    }else{
-      data.createdAt=firebase.firestore.FieldValue.serverTimestamp();
-      await productsRef.add(data);
-    }
-
-    cancelEdit();
-    alert("Produk berhasil disimpan.");
-  }catch(e){
-    console.error(e);
-    alert("Gagal menyimpan produk: "+e.message);
-  }
-}
-
-function editProduct(id){
-  const p=products.find(x=>x.id===id);
-  if(!p)return;
-
-  editId=id;
-  editingOldImage=p.image||"";
-
-  document.getElementById("productName").value=p.name||"";
-  document.getElementById("productPrice").value=p.price||"";
-  document.getElementById("productIcon").value=p.icon||"";
-  document.getElementById("productDescription").value=p.description||"";
-  document.getElementById("formTitle").textContent="Edit Produk";
-
-  if(p.image){
-    document.getElementById("productPreview").src=p.image;
-    document.getElementById("productPreviewBox").style.display="block";
-  }else{
-    document.getElementById("productPreviewBox").style.display="none";
-  }
-
-  document.getElementById("cancelEdit").style.display="inline-block";
-  document.querySelector(".admin-box").scrollIntoView({behavior:"smooth",block:"start"});
-}
-
 function cancelEdit(){
-  editId=null;
-  editingOldImage="";
-  document.getElementById("productName").value="";
-  document.getElementById("productPrice").value="";
-  document.getElementById("productIcon").value="";
-  document.getElementById("productDescription").value="";
-  document.getElementById("productFile").value="";
-  document.getElementById("productPreview").removeAttribute("src");
-  document.getElementById("productPreviewBox").style.display="none";
-  document.getElementById("formTitle").textContent="Tambah Produk";
-  document.getElementById("cancelEdit").style.display="none";
+  editIndex=-1;["pName","pPrice","pIcon","pDesc","pImage"].forEach(id=>document.getElementById(id).value="");
 }
-
-async function deleteProduct(id){
-  if(!adminUnlocked)return alert("Silakan buka panel admin.");
-
-  const p=products.find(x=>x.id===id);
-  if(!p || !confirm("Hapus produk "+p.name+"?"))return;
-
-  try{
-    await productsRef.doc(id).delete();
-  }catch(e){
-    console.error(e);
-    alert("Gagal menghapus. Cek Firestore Rules.");
-  }
+function deleteProduct(i){
+  if(confirm("Hapus "+data.products[i].name+"?")){data.products.splice(i,1);saveData()}
 }
-
-async function seedDefaultProductsIfNeeded(){
-  try{
-    const snap=await productsRef.limit(1).get();
-    if(!snap.empty)return;
-
-    const batch=db.batch();
-    DEFAULT_PRODUCTS.forEach(p=>{
-      const ref=productsRef.doc();
-      batch.set(ref,{
-        ...p,
-        createdAt:firebase.firestore.FieldValue.serverTimestamp(),
-        updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-      });
-    });
-    await batch.commit();
-  }catch(e){
-    console.warn("Seed produk dilewati:",e);
-  }
+function addBenefit(){
+  data.benefits.push({icon:"⭐",name:"BENEFIT BARU",desc:"Deskripsi benefit baru."});saveData();
 }
-
-function startRealtime(){
-  settingsUnsubscribe=settingsRef.onSnapshot(
-    snap=>{
-      if(snap.exists){
-        const d=snap.data();
-        discord=d.discord || DEFAULT_DISCORD;
-        serverIP=d.serverIP || DEFAULT_IP;
-        players=d.players || DEFAULT_PLAYERS;
-        siteLogo=d.logo || "";
-      }else{
-        discord=DEFAULT_DISCORD;
-        serverIP=DEFAULT_IP;
-        players=DEFAULT_PLAYERS;
-        siteLogo="";
-      }
-
-      document.getElementById("serverIP").textContent=serverIP;
-      document.getElementById("players").textContent=players;
-      updateDiscordLinks();
-      updateLogo();
-
-      if(adminUnlocked)fillSettingsForm();
-      setFirebaseStatus("● Firebase realtime aktif",true);
-    },
-    err=>{
-      console.error(err);
-      setFirebaseStatus("Firebase settings gagal dibaca: "+err.code,false);
-    }
-  );
-
-  productsUnsubscribe=productsRef.onSnapshot(
-    snap=>{
-      products=[];
-      snap.forEach(doc=>{
-        products.push({id:doc.id,...doc.data()});
-      });
-
-      products.sort((a,b)=>{
-        const aa=a.createdAt?.toMillis?.() || 0;
-        const bb=b.createdAt?.toMillis?.() || 0;
-        return aa-bb;
-      });
-
-      renderProducts();
-      if(adminUnlocked)renderAdminProducts();
-    },
-    err=>{
-      console.error(err);
-      document.getElementById("productContainer").innerHTML='<div style="grid-column:1/-1;text-align:center;color:#ff8888;padding:40px">Gagal mengambil katalog dari Firebase. Cek Firestore Rules.</div>';
-      setFirebaseStatus("Firebase katalog gagal dibaca: "+err.code,false);
-    }
-  );
+function addSupporter(){
+  const n=prompt("Nama supporter:");if(!n)return;
+  const p=prompt("Produk:")||"DONASI";const a=Number(prompt("Nominal:","50000"))||0;
+  data.supporters.unshift({name:n,product:p,amount:a});saveData();
 }
+function checkout(){window.open(data.discord,"_blank")}
+function detail(i){
+  const p=data.products[i];
+  document.getElementById("modalIcon").textContent=p.icon||"⭐";
+  document.getElementById("modalName").textContent=p.name;
+  document.getElementById("modalPrice").textContent=rupiah(p.price);
+  document.getElementById("modalDesc").textContent=p.desc;
+  document.getElementById("modalBuy").href=data.discord;
+  document.getElementById("modal").classList.add("show");
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
 
-document.getElementById("adminPin").addEventListener("keydown",e=>{
-  if(e.key==="Enter")loginAdmin();
-});
-
-document.addEventListener("keydown",e=>{
-  if(e.key==="Escape")closeAdmin();
-});
-
-updateDiscordLinks();
-startRealtime();
-setTimeout(seedDefaultProductsIfNeeded,1200);
+/* Render langsung dengan data default supaya UI tidak kosong,
+   lalu coba konek Firebase (kalau berhasil, data akan di-refresh). */
+renderAll();
+initFirebase();
 </script>
 </body>
 </html>
