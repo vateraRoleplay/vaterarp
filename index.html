@@ -461,7 +461,7 @@ body:after{
         <input class="input" id="fbStorageBucket" placeholder="storageBucket, contoh: projectmu.appspot.com">
         <input class="input" id="fbSenderId" placeholder="messagingSenderId">
         <input class="input" id="fbAppId" placeholder="appId">
-        <div class="file-note">📋 Semua nilai ini diambil dari Firebase Console → Project Settings → General → "Your apps". Setelah simpan, halaman akan dimuat ulang untuk konek ke Firebase kamu.</div>
+        <div class="file-note">📋 Config Firebase project "vaterarpv2" sudah tertanam di file ini, jadi semua pengunjung otomatis konek — gak perlu isi apa-apa lagi. Form ini cuma buat kamu GANTI ke project Firebase lain kalau suatu saat perlu. ⚠️ Perubahan lewat form ini cuma tersimpan di HP kamu sendiri, bukan buat pengunjung lain — kalau mau ganti config permanen buat semua orang, edit langsung `defaultFirebaseConfig` di kode.</div>
         <div class="admin-actions">
           <button class="btn primary" onclick="saveFirebaseSettings()">SIMPAN & HUBUNGKAN</button>
           <button class="smallbtn" onclick="clearFirebaseSettings()">HAPUS CONFIG</button>
@@ -545,8 +545,17 @@ body:after{
    browser kamu. Object di bawah cuma fallback kalau belum diisi.
    ========================================================= */
 const FIREBASE_CONFIG_KEY="vatera_firebase_config";
-const emptyFirebaseConfig = {
-  apiKey:"", authDomain:"", projectId:"", storageBucket:"", messagingSenderId:"", appId:""
+/* Config bawaan — sudah diisi config project Firebase "vaterarpv2" kamu,
+   jadi SEMUA pengunjung (device manapun) otomatis konek ke Firestore yang
+   sama tanpa perlu setting manual. Form di panel admin cuma dipakai kalau
+   suatu saat kamu mau GANTI ke project Firebase lain. */
+const defaultFirebaseConfig = {
+  apiKey: "AIzaSyAQ8UqglA2YLLDK9p3vhq3BXvQaZazy21M",
+  authDomain: "vaterarpv2.firebaseapp.com",
+  projectId: "vaterarpv2",
+  storageBucket: "vaterarpv2.firebasestorage.app",
+  messagingSenderId: "674500209567",
+  appId: "1:674500209567:web:7a8e79e68c25ca6e4f6baa"
 };
 function loadFirebaseConfig(){
   try{
@@ -618,11 +627,7 @@ function fallbackToLocal(msg){
   if(msg)toast(msg);
 }
 function initFirebase(){
-  const cfg=loadFirebaseConfig();
-  if(!cfg){
-    fallbackToLocal();
-    return;
-  }
+  const cfg=loadFirebaseConfig()||defaultFirebaseConfig;
   try{
     if(typeof firebase==="undefined") throw new Error("Firebase SDK gagal dimuat (cek koneksi internet / CDN diblokir).");
     firebase.initializeApp(cfg);
@@ -689,7 +694,7 @@ function showAdminGate(){
    5) SETTING FIREBASE DARI PANEL ADMIN
    ========================================================= */
 function fillFirebaseSettingsForm(){
-  const cfg=loadFirebaseConfig()||emptyFirebaseConfig;
+  const cfg=loadFirebaseConfig()||defaultFirebaseConfig;
   document.getElementById("fbApiKey").value=cfg.apiKey||"";
   document.getElementById("fbAuthDomain").value=cfg.authDomain||"";
   document.getElementById("fbProjectId").value=cfg.projectId||"";
@@ -904,4 +909,4 @@ renderAll();
 initFirebase();
 </script>
 </body>
-</html>
+  </html>
