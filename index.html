@@ -483,6 +483,13 @@ body:after{
           <input class="input" id="pPrice" type="number" placeholder="Harga, contoh 50000">
           <input class="input" id="pIcon" placeholder="Icon, contoh 👑">
           <input class="input" id="pDesc" placeholder="Deskripsi produk">
+          <select class="input" id="pCategory">
+            <option value="vehicle">🚘 Kendaraan</option>
+            <option value="house">🏠 Rumah</option>
+            <option value="business">💼 Bisnis</option>
+            <option value="booster">🚀 Booster Server</option>
+            <option value="vip">👑 VIP / Pendukung</option>
+          </select>
           <input class="input" id="pImage" type="file" accept="image/*">
           <div class="file-note">🖼️ Pilih gambar langsung dari galeri HP. Tidak perlu URL.</div>
           <div class="admin-actions">
@@ -506,7 +513,7 @@ body:after{
 
       <div class="admin-card" style="margin-top:16px">
         <h3>📦 Daftar Produk</h3>
-        <div class="admin-hint">Kategori otomatis berdasarkan nama/deskripsi produk. Contoh: Vehicle, House, Bisnis, Booster, atau VIP.</div>
+        <div class="admin-hint">Kategori ditentukan dari pilihan dropdown saat tambah/edit produk. Tap EDIT di bawah buat ganti kategori produk lama.</div>
 <div id="adminProducts"></div>
       </div>
 
@@ -578,12 +585,12 @@ const defaults={
   ip:"208.84.103.75:7037",
   players:"128 / 500",
   products:[
-    {name:"VIP SILVER",price:50000,icon:"👑",desc:"Status VIP eksklusif, bonus benefit supporter, dan akses fitur khusus server.",image:"",tag:"POPULAR"},
-    {name:"VIP GOLD",price:100000,icon:"💎",desc:"Benefit VIP Gold dengan fasilitas premium dan akses eksklusif di dalam server.",image:"",tag:"BEST SELLER"},
-    {name:"PEMILIK BISNIS",price:150000,icon:"💼",desc:"Dapatkan akses atau kepemilikan bisnis eksklusif di dalam server.",image:"",tag:"LIMITED"},
-    {name:"EXCLUSIVE VEHICLE",price:75000,icon:"🚘",desc:"Kendaraan eksklusif untuk digunakan di server.",image:"",tag:""},
-    {name:"EXCLUSIVE HOUSE",price:150000,icon:"🏠",desc:"Rumah eksklusif dengan lokasi dan benefit khusus supporter.",image:"",tag:""},
-    {name:"ULTIMATE SUPPORTER",price:250000,icon:"🔥",desc:"Paket pendukung tertinggi dengan kombinasi benefit premium paling lengkap.",image:"",tag:""}
+    {name:"VIP SILVER",price:50000,icon:"👑",desc:"Status VIP eksklusif, bonus benefit supporter, dan akses fitur khusus server.",category:"vip",image:"",tag:"POPULAR"},
+    {name:"VIP GOLD",price:100000,icon:"💎",desc:"Benefit VIP Gold dengan fasilitas premium dan akses eksklusif di dalam server.",category:"vip",image:"",tag:"BEST SELLER"},
+    {name:"PEMILIK BISNIS",price:150000,icon:"💼",desc:"Dapatkan akses atau kepemilikan bisnis eksklusif di dalam server.",category:"business",image:"",tag:"LIMITED"},
+    {name:"EXCLUSIVE VEHICLE",price:75000,icon:"🚘",desc:"Kendaraan eksklusif untuk digunakan di server.",category:"vehicle",image:"",tag:""},
+    {name:"EXCLUSIVE HOUSE",price:150000,icon:"🏠",desc:"Rumah eksklusif dengan lokasi dan benefit khusus supporter.",category:"house",image:"",tag:""},
+    {name:"ULTIMATE SUPPORTER",price:250000,icon:"🔥",desc:"Paket pendukung tertinggi dengan kombinasi benefit premium paling lengkap.",category:"vip",image:"",tag:""}
   ],
   benefits:[
     {icon:"👑",name:"VIP STATUS",desc:"Status VIP eksklusif di dalam server."},
@@ -754,7 +761,10 @@ function adminLogout(){
 
 let activeCategory="";
 
+const VALID_CATEGORIES=["vehicle","house","business","booster","vip"];
 function productCategory(p){
+  if(p.category && VALID_CATEGORIES.includes(p.category)) return p.category;
+  // fallback buat produk lama yang belum punya field category
   const n=(p.name||"").toLowerCase();
   const d=(p.desc||"").toLowerCase();
   if(n.includes("vehicle") || n.includes("kendaraan") || d.includes("kendaraan")) return "vehicle";
@@ -830,10 +840,11 @@ function renderSupporters(){
     </div>`).join("")||'<div class="empty">Belum ada supporter.</div>';
 }
 function renderAdminProducts(){
+  const catLabel={vehicle:"🚘 Kendaraan",house:"🏠 Rumah",business:"💼 Bisnis",booster:"🚀 Booster",vip:"👑 VIP"};
   document.getElementById("adminProducts").innerHTML=data.products.map((p,i)=>`
     <div class="admin-product">
       ${p.image?`<img class="admin-thumb" src="${p.image}">`:`<div class="admin-thumb">${esc(p.icon||"⭐")}</div>`}
-      <div><b>${esc(p.name)}</b><div style="color:#777">${rupiah(p.price)}</div></div>
+      <div><b>${esc(p.name)}</b><div style="color:#777">${rupiah(p.price)} · ${catLabel[productCategory(p)]}</div></div>
       <div class="admin-actions"><button class="smallbtn" onclick="editProduct(${i})">EDIT</button><button class="smallbtn" onclick="deleteProduct(${i})">HAPUS</button></div>
     </div>`).join("")||'<div class="empty">Belum ada produk.</div>';
 }
@@ -861,7 +872,8 @@ function readImage(file,cb){
 function saveProduct(){
   const name=document.getElementById("pName").value.trim(),price=Number(document.getElementById("pPrice").value);
   if(!name||!price){alert("Nama dan harga wajib diisi.");return}
-  const obj={name,price,icon:document.getElementById("pIcon").value.trim()||"⭐",desc:document.getElementById("pDesc").value.trim(),image:editIndex>=0?data.products[editIndex].image:"",tag:""};
+  const category=document.getElementById("pCategory").value;
+  const obj={name,price,icon:document.getElementById("pIcon").value.trim()||"⭐",desc:document.getElementById("pDesc").value.trim(),category,image:editIndex>=0?data.products[editIndex].image:"",tag:""};
   const file=document.getElementById("pImage").files[0];
   readImage(file,img=>{
     if(img)obj.image=img;
@@ -873,11 +885,13 @@ function editProduct(i){
   editIndex=i;const p=data.products[i];
   document.getElementById("pName").value=p.name;document.getElementById("pPrice").value=p.price;
   document.getElementById("pIcon").value=p.icon||"";document.getElementById("pDesc").value=p.desc||"";
+  document.getElementById("pCategory").value=productCategory(p);
   document.getElementById("pImage").value="";
   go(5);toast("Mode edit produk aktif.");
 }
 function cancelEdit(){
   editIndex=-1;["pName","pPrice","pIcon","pDesc","pImage"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("pCategory").value="vehicle";
 }
 function deleteProduct(i){
   if(confirm("Hapus "+data.products[i].name+"?")){data.products.splice(i,1);saveData()}
