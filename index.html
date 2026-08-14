@@ -44,14 +44,52 @@ body:after{
 }
 .top-btn.discord{padding:0 13px;color:#111;background:linear-gradient(135deg,#ff7100,#ffd34d);border:0}
 
+/* LIQUID 3-DOT BUTTON */
+.dots-btn{
+  position:relative;height:42px;width:44px;border-radius:10px;cursor:pointer;
+  border:1px solid rgba(255,154,0,.35);background:rgba(255,145,0,.08);
+  display:flex;align-items:center;justify-content:center;gap:4px;
+  overflow:visible;-webkit-tap-highlight-color:transparent;
+}
+.dots-btn:before{
+  content:"";position:absolute;inset:0;border-radius:10px;
+  background:radial-gradient(circle,rgba(255,145,0,.55) 0%,rgba(255,145,0,0) 70%);
+  transform:scale(0);opacity:0;pointer-events:none;
+}
+.dots-btn.ripple:before{animation:liquidRipple .55s cubic-bezier(.2,.9,.3,1)}
+@keyframes liquidRipple{
+  0%{transform:scale(.3);opacity:.7}
+  100%{transform:scale(2.1);opacity:0}
+}
+.dots-btn .dot-goo{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:4px;
+  filter:url(#liquidGoo);
+}
+.dot-liquid{
+  width:5px;height:5px;border-radius:50%;background:#ffd15a;
+  transition:transform .5s cubic-bezier(.68,-0.55,.27,1.45);
+}
+.dots-btn.open .dot-liquid{background:#ff7900}
+.dots-btn.open .dot-liquid:nth-child(1){transform:translateX(7px) scale(1.6)}
+.dots-btn.open .dot-liquid:nth-child(2){transform:scale(1.5) translateY(-1px)}
+.dots-btn.open .dot-liquid:nth-child(3){transform:translateX(-7px) scale(1.6)}
+
 /* 3 DOT MENU */
 .menu{
   position:fixed;right:12px;top:78px;z-index:2100;width:min(310px,calc(100% - 24px));
-  padding:12px;border:1px solid rgba(255,154,0,.3);border-radius:15px;
+  padding:12px;border:1px solid rgba(255,154,0,.3);
   background:rgba(10,10,10,.97);box-shadow:0 20px 70px rgba(0,0,0,.75);
-  opacity:0;transform:translateY(-10px) scale(.98);pointer-events:none;transition:.2s;
+  opacity:0;transform-origin:top right;
+  transform:translateY(-14px) scale(.4);pointer-events:none;
+  border-radius:50% 50% 42% 58%/60% 55% 45% 40%;
+  transition:transform .5s cubic-bezier(.34,1.56,.64,1),
+             opacity .35s ease,
+             border-radius .5s cubic-bezier(.34,1.56,.64,1);
 }
-.menu.open{opacity:1;transform:none;pointer-events:auto}
+.menu.open{
+  opacity:1;transform:none;pointer-events:auto;
+  border-radius:15px;
+}
 .menu-title{padding:10px 12px 8px;color:#888;font-size:13px;text-transform:uppercase;letter-spacing:2px}
 .menu-item{
   width:100%;padding:13px 14px;margin:4px 0;border-radius:10px;border:1px solid transparent;
@@ -104,6 +142,27 @@ body:after{
 .card strong{display:block;font-family:'Orbitron';font-size:20px;color:#ffd04c;margin-top:7px}
 .online{color:#61ff9a!important}
 
+/* BANNER PROMOSI */
+.banner-wrap{max-width:900px;margin:0 auto 26px}
+.banner-promo{
+  position:relative;border-radius:16px;overflow:hidden;min-height:120px;
+  display:flex;align-items:center;text-decoration:none;
+  background-size:cover;background-position:center;
+  border:1px solid rgba(255,154,0,.3);
+  box-shadow:0 15px 45px rgba(0,0,0,.45);
+}
+.banner-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(4,4,3,.9) 20%,rgba(20,10,0,.35) 75%);
+}
+.banner-content{position:relative;z-index:1;padding:22px 26px;text-align:left}
+.banner-eyebrow{
+  display:inline-block;padding:5px 12px;border-radius:20px;margin-bottom:9px;
+  border:1px solid rgba(255,172,75,.5);background:rgba(255,120,0,.1);
+  color:#ffc84c;font-size:11px;letter-spacing:2px;font-weight:800;
+}
+.banner-title{font-family:'Orbitron';font-size:clamp(19px,4vw,26px);color:#fff;font-weight:700;line-height:1.2}
+.banner-sub{color:#ccc;font-size:14px;margin-top:6px}
 
 /* KATEGORI DONASI */
 .donation-categories{
@@ -196,6 +255,7 @@ body:after{
   .donation-category span{font-size:34px;margin-bottom:9px}
   .donation-category b{font-size:11px}
   .donation-category small{font-size:11px}
+  .banner-content{padding:18px}
 }
 
 /* CATALOG */
@@ -258,6 +318,24 @@ body:after{
 .file-note{color:#777;font-size:12px;margin:-3px 0 10px}
 .empty{color:#777;text-align:center;padding:30px}
 
+/* TOGGLE SWITCH (banner) */
+.toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#080808;border:1px solid rgba(255,154,0,.2);border-radius:8px;
+  padding:11px 13px;margin-bottom:12px;
+}
+.toggle-row span{font-size:14px;color:#ccc;font-weight:600}
+.switch{
+  width:42px;height:23px;background:#292929;border-radius:20px;position:relative;
+  cursor:pointer;transition:.2s;flex-shrink:0;
+}
+.switch.on{background:linear-gradient(135deg,#ff7100,#ffd34d)}
+.switch::after{
+  content:'';position:absolute;top:2px;left:2px;width:19px;height:19px;
+  background:#fff;border-radius:50%;transition:.2s;
+}
+.switch.on::after{transform:translateX(19px)}
+
 /* ADMIN LOGIN GATE */
 .admin-login-wrap{max-width:420px;margin:40px auto}
 .admin-login-card{
@@ -307,10 +385,27 @@ body:after{
 
 <body>
 
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <filter id="liquidGoo">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feColorMatrix in="blur" mode="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo"/>
+      <feComposite in="SourceGraphic" in2="goo" operator="atop"/>
+    </filter>
+  </defs>
+</svg>
+
 <header class="topbar">
   <div class="logo">VATERA <span>ROLEPLAY</span></div>
   <div class="top-spacer"></div>
-  <button class="top-btn" onclick="toggleMenu()" aria-label="Buka menu">⋮</button>
+  <button class="dots-btn" id="dotsBtn" onclick="toggleMenu()" aria-label="Buka menu">
+    <span class="dot-goo">
+      <span class="dot-liquid"></span>
+      <span class="dot-liquid"></span>
+      <span class="dot-liquid"></span>
+    </span>
+  </button>
   <a class="top-btn discord" id="topDiscord" href="#" target="_blank" style="display:flex;align-items:center;justify-content:center;text-decoration:none">DISCORD</a>
 </header>
 
@@ -333,6 +428,9 @@ body:after{
     <div class="badge">★ OFFICIAL TOKO DONASI</div>
     <h1>VATERA<br><span>ROLEPLAY</span></h1>
     <p>Dukung perkembangan server GTA SAMP kami. Dapatkan berbagai benefit eksklusif dan bantu membangun komunitas roleplay yang lebih besar.</p>
+
+    <div class="banner-wrap" id="bannerArea"></div>
+
     <div class="actions">
       <button class="btn primary" onclick="go(1)">DONASI SEKARANG</button>
       <a class="btn secondary" id="heroDiscord" href="#" target="_blank">JOIN DISCORD</a>
@@ -468,6 +566,20 @@ body:after{
         </div>
       </div>
 
+      <div class="admin-card" style="margin-bottom:16px">
+        <h3>📢 Banner Promosi</h3>
+        <div class="toggle-row">
+          <span>Tampilkan banner di beranda</span>
+          <div class="switch" id="bannerActiveToggle" onclick="toggleBannerActive()"></div>
+        </div>
+        <input class="input" id="bnEyebrow" placeholder="Label kecil, contoh: EVENT TERBATAS">
+        <input class="input" id="bnTitle" placeholder="Judul banner">
+        <input class="input" id="bnSub" placeholder="Teks kecil / keterangan">
+        <input class="input" id="bnImage" placeholder="URL gambar latar banner">
+        <input class="input" id="bnLink" placeholder="Link tujuan saat banner diklik (kosongkan = pakai link Discord)">
+        <button class="btn primary" onclick="saveBanner()">SIMPAN BANNER</button>
+      </div>
+
       <div class="admin-grid">
         <div class="admin-card">
           <h3>⚙️ Pengaturan Website</h3>
@@ -584,6 +696,14 @@ const defaults={
   discord:"https://discord.gg/yourserver",
   ip:"208.84.103.75:7037",
   players:"128 / 500",
+  banner:{
+    active:true,
+    eyebrow:"EVENT TERBATAS",
+    title:"DISKON 20% SEMUA VIP",
+    subtitle:"Berlaku sampai akhir bulan ini",
+    image:"https://images.unsplash.com/photo-1580273916550-e323be2ae537?auto=format&fit=crop&w=1200&q=70",
+    link:""
+  },
   products:[
     {name:"VIP SILVER",price:50000,icon:"👑",desc:"Status VIP eksklusif, bonus benefit supporter, dan akses fitur khusus server.",category:"vip",image:"",tag:"POPULAR"},
     {name:"VIP GOLD",price:100000,icon:"💎",desc:"Benefit VIP Gold dengan fasilitas premium dan akses eksklusif di dalam server.",category:"vip",image:"",tag:"BEST SELLER"},
@@ -621,7 +741,7 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&l
 function loadLocal(){
   try{
     const saved=JSON.parse(localStorage.getItem(LOCAL_KEY));
-    return saved ? {...defaults,...saved} : structuredClone(defaults);
+    return saved ? {...defaults,...saved,banner:{...defaults.banner,...(saved.banner||{})}} : structuredClone(defaults);
   }catch(e){return structuredClone(defaults)}
 }
 function saveLocal(){
@@ -643,7 +763,8 @@ function initFirebase(){
     docRef.onSnapshot(snap=>{
       useFirebase=true;
       if(snap.exists){
-        data={...defaults,...snap.data()};
+        const remote=snap.data();
+        data={...defaults,...remote,banner:{...defaults.banner,...(remote.banner||{})}};
       }else{
         data=structuredClone(defaults);
         docRef.set(data).catch(err=>console.error("Gagal buat data awal:",err));
@@ -670,17 +791,29 @@ function saveData(){
   renderAll();
 }
 
-function toggleMenu(){document.getElementById("menu").classList.toggle("open")}
+function toggleMenu(){
+  const menu=document.getElementById("menu"),btn=document.getElementById("dotsBtn");
+  const willOpen=!menu.classList.contains("open");
+  menu.classList.toggle("open",willOpen);
+  btn.classList.toggle("open",willOpen);
+  btn.classList.remove("ripple");
+  void btn.offsetWidth; // restart animasi ripple
+  btn.classList.add("ripple");
+}
 function go(i){
   document.getElementById("slides").style.transform=`translateX(-${i*100}%)`;
   document.querySelectorAll(".menu-item").forEach((x,n)=>x.classList.toggle("active",n===i));
   document.getElementById("menu").classList.remove("open");
+  document.getElementById("dotsBtn").classList.remove("open");
   document.querySelectorAll(".slide")[i].scrollTop=0;
   if(i===5)showAdminGate();
 }
 document.addEventListener("click",e=>{
-  const menu=document.getElementById("menu"),btn=document.querySelector(".top-btn");
-  if(menu.classList.contains("open") && !menu.contains(e.target) && !btn.contains(e.target))menu.classList.remove("open");
+  const menu=document.getElementById("menu"),btn=document.getElementById("dotsBtn");
+  if(menu.classList.contains("open") && !menu.contains(e.target) && !btn.contains(e.target)){
+    menu.classList.remove("open");
+    btn.classList.remove("open");
+  }
 });
 
 /* =========================================================
@@ -694,7 +827,7 @@ function showAdminGate(){
   document.getElementById("adminPanelBox").style.display=authed?"block":"none";
   document.getElementById("adminLoginError").style.display="none";
   document.getElementById("adminPassInput").value="";
-  if(authed)fillFirebaseSettingsForm();
+  if(authed){fillFirebaseSettingsForm();fillBannerForm()}
 }
 
 /* =========================================================
@@ -757,6 +890,49 @@ function adminLogout(){
   sessionStorage.removeItem("vatera_admin_ok");
   showAdminGate();
   toast("Berhasil logout.");
+}
+
+/* =========================================================
+   6) BANNER PROMOSI — edit di panel admin, tampil di Beranda,
+   sync lewat object `data.banner` yang sama dengan produk dkk.
+   ========================================================= */
+function fillBannerForm(){
+  const b=data.banner||defaults.banner;
+  document.getElementById("bannerActiveToggle").classList.toggle("on",!!b.active);
+  document.getElementById("bnEyebrow").value=b.eyebrow||"";
+  document.getElementById("bnTitle").value=b.title||"";
+  document.getElementById("bnSub").value=b.subtitle||"";
+  document.getElementById("bnImage").value=b.image||"";
+  document.getElementById("bnLink").value=b.link||"";
+}
+function toggleBannerActive(){
+  document.getElementById("bannerActiveToggle").classList.toggle("on");
+}
+function saveBanner(){
+  data.banner={
+    active:document.getElementById("bannerActiveToggle").classList.contains("on"),
+    eyebrow:document.getElementById("bnEyebrow").value.trim(),
+    title:document.getElementById("bnTitle").value.trim(),
+    subtitle:document.getElementById("bnSub").value.trim(),
+    image:document.getElementById("bnImage").value.trim(),
+    link:document.getElementById("bnLink").value.trim()
+  };
+  saveData();
+}
+function renderBanner(){
+  const area=document.getElementById("bannerArea");
+  const b=data.banner||defaults.banner;
+  if(!b || !b.active || !b.title){area.innerHTML="";return}
+  const href=b.link||data.discord;
+  area.innerHTML=`
+    <a class="banner-promo" href="${esc(href)}" target="_blank" style="background-image:url('${esc(b.image||"")}')">
+      <div class="banner-overlay"></div>
+      <div class="banner-content">
+        ${b.eyebrow?`<span class="banner-eyebrow">${esc(b.eyebrow)}</span>`:""}
+        <div class="banner-title">${esc(b.title)}</div>
+        ${b.subtitle?`<div class="banner-sub">${esc(b.subtitle)}</div>`:""}
+      </div>
+    </a>`;
 }
 
 let activeCategory="";
@@ -854,7 +1030,8 @@ function renderAll(){
   document.getElementById("setDiscord").value=data.discord;
   document.getElementById("setIP").value=data.ip;
   document.getElementById("setPlayers").value=data.players;
-  updateLinks();renderProducts();renderBenefits();renderSupporters();renderAdminProducts();
+  updateLinks();renderBanner();renderProducts();renderBenefits();renderSupporters();renderAdminProducts();
+  if(isAdminAuthed())fillBannerForm();
 }
 function updateLinks(){
   ["topDiscord","heroDiscord"].forEach(id=>document.getElementById(id).href=data.discord);
